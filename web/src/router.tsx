@@ -1,0 +1,23 @@
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Inatec from './pages/Inatec';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import AllClass from './pages/AllClass';
+import Class from './pages/Class';
+import Chats from './pages/Chats';
+
+const Routes = () => (
+    <BrowserRouter>
+        <Switch>
+            <Route exact path="/" component={Inatec}/>
+            <Route path="/sign-up" component={SignUp}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/all-class/" component={AllClass}/>
+            <Route path="/class/:id" component={Class}/>
+            <Route path="/chats/:id" component={Chats}/>
+        </Switch>
+    </BrowserRouter>
+)
+
+export default Routes;
