@@ -18,20 +18,18 @@ const SignUp: React.FC = () => {
   const [ course, setCourse ] = useState('');
   const [ time, setTime ] = useState('');
   const [ year, setYear ] = useState('');
-  const [ who, SetWho ] = useState('student');
+  const [ teacher, setTeacher ] = useState(false);
   const [ classInfo, setClassInfo ] = useState({display: 'block'});
 
   useEffect( () => {
-    if(who === 'teacher')
+    if(teacher === true)
     return setClassInfo({display: 'none'});
 
     setClassInfo({display: 'block'});
-  }, [who])
+  }, [teacher])
 
   const HandleSignUp = (e: FormEvent) => {
     e.preventDefault();
-
-    console.log(who);
   }
 
   return (
@@ -123,10 +121,7 @@ const SignUp: React.FC = () => {
                     type="radio" 
                     defaultChecked 
                     name="radio"
-                    value={who} 
-                    onChange={ (e) => { 
-                      SetWho('student'); 
-                    } } 
+                    onChange={ (e) => { setTeacher(false) } }
                   />
                   <CheckMark></CheckMark>
                 </label>
@@ -136,8 +131,8 @@ const SignUp: React.FC = () => {
                   <input 
                     type="radio" 
                     name="radio"
-                    value={who}
-                    onChange={ (e) => { SetWho('teacher') } } 
+                    checked={teacher}
+                    onChange={ (e) => { setTeacher(true) } } 
                     />
                   <CheckMark></CheckMark>
                 </label>

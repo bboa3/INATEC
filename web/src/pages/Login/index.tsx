@@ -9,13 +9,11 @@ import {
 
 const Login: React.FC = () => {
   const [ username, setUsername ] = useState('');
-  const [ who, SetWho ] = useState('student');
+  const [ teacher, setTeacher ] = useState(false);
   const [ password, setPassword ] = useState('');
 
   const HandleLogin = (e: FormEvent) => {
     e.preventDefault();
-
-    console.log(who);
   }
 
   return (
@@ -49,8 +47,7 @@ const Login: React.FC = () => {
                     type="radio" 
                     defaultChecked 
                     name="radio"
-                    value={who} 
-                    onChange={ (e) => { SetWho('student') } } 
+                    onChange={ (e) => { setTeacher(false) } } 
                   />
                   <CheckMark></CheckMark>
                 </label>
@@ -60,8 +57,8 @@ const Login: React.FC = () => {
                   <input 
                     type="radio" 
                     name="radio"
-                    value={who}
-                    onChange={ (e) => { SetWho('teacher') } } 
+                    checked={teacher}
+                    onChange={ (e) => { setTeacher(true) } } 
                     />
                   <CheckMark></CheckMark>
                 </label>
