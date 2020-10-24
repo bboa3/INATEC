@@ -14,6 +14,7 @@ web/build
 **/.DS_Store
 **/.env.local
 **/.env
+**/.env3
 **/.env.development.local
 **/.env.test.local
 **/.env.production.local

@@ -13,9 +13,9 @@ const Routes = () => (
             <Route exact path="/" component={Inatec}/>
             <Route path="/sign-up" component={SignUp}/>
             <Route path="/login" component={Login}/>
-            <Route path="/all-class/" component={AllClass}/>
-            <Route path="/class/:id" component={Class}/>
-            <Route path="/chats/:id" component={Chats}/>
+            <Route path="/in/all-class/" component={AllClass}/>
+            <Route path="/in/class/:id" component={Class}/>
+            <Route path="/in/chats/:id" component={Chats}/>
         </Switch>
     </BrowserRouter>
 )

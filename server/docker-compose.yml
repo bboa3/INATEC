@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  postgresdb:
+    env_file:
+      - ./.env
+    image: postgres:latest
+    volumes:
+      - db-data:/home/inatec/db/data
+    networks:
+      - inatec-network
+    container_name: "postgresdb"
+    restart: "always"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPEORM_DATABASE}
+networks:
+    inatec-network:
+volumes:
+    db-data:
