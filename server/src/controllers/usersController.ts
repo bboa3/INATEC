@@ -14,7 +14,10 @@ export default {
     if(!user)
     return response.status(404).json({error: 'usuário não encontrado'});
 
-    const userClass = await prisma.class.findOne({where: {id: user.classId}})
+    if(user.teacher)
+    return response.json(userViews.renderTeacher(user));
+
+    const userClass = await prisma.class.findOne({where: {id: user.classId!}})
     if(!userClass)
     return response.status(404).json({error: 'Turma do usuário não encontrado'});
 
@@ -51,37 +54,55 @@ export default {
     if(userEmail)
     return response.status(400).json({error: 'este email já existe'});
 
-    const classId = await prisma.class.findOne({
-      where: {
-        identity: `${course}${year}${time}`
-      },
-      select: {id: true}
-    })
-    if(!classId)
-    return response.status(404).json({error: `Turma do curso ${course} ${year} ${time} não encontrado`})
-
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
-
-    const newUser = await prisma.users.create({
-      data: {
-        name,
-        username,
-        email,
-        phone,
-        gender,
-        avatar,
-        teacher, 
-        class: {
-          connect: {
-            id: classId.id
-          }
+    if(teacher) {
+      //save teachers
+      const newTeacher = await prisma.users.create({
+        data: {
+          name,
+          username,
+          email,
+          phone,
+          gender,
+          avatar,
+          teacher,
+          password
+        }
+      })
+      response.json(userViews.renderTeacher(newTeacher));
+    } else {
+      // save students
+      const classId = await prisma.class.findOne({
+        where: {
+          identity: `${course}${year}${time}`
         },
-        password: hashedPassword
-      }
-    })
+        select: {id: true}
+      })
+      if(!classId)
+      return response.status(404).json({error: `Turma do curso ${course} ${year} ${time} não encontrado`})
 
-    const newUserClass = await prisma.class.findOne({where: {id: newUser.classId}})
-    response.json(userViews.render(newUser, newUserClass!));
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+
+      const newUser = await prisma.users.create({
+        data: {
+          name,
+          username,
+          email,
+          phone,
+          gender,
+          avatar,
+          teacher, 
+          class: {
+            connect: {
+              id: classId.id
+            }
+          },
+          password: hashedPassword
+        }
+      })
+
+      const newUserClass = await prisma.class.findOne({where: {id: newUser.classId!}})
+      response.json(userViews.render(newUser, newUserClass!));
+    }
   }
 }
