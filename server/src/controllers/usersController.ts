@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import userViews from '../views/userViews';
 
 const prisma = new PrismaClient();
 
@@ -9,21 +10,18 @@ export default {
   async index(request: Request, response: Response) {
     const { username, password } = request.body;
 
-    const user = prisma.users.findOne({
-      where: {
-        username
-      },
-    }).then((data) => {
-      if(data) {
-        if(bcrypt.compareSync(password, data.password)) {
-          response.json(data);
-        } else {
-          response.status(400).json({error: 'palavra-chave invalida'});
-        }
-      } else {
-        response.status(404).json({error: 'usuário não encontrado'});
-      }
-    })
+    const user = await prisma.users.findOne({where: {username}});
+    if(!user)
+    return response.status(404).json({error: 'usuário não encontrado'});
+
+    const userClass = await prisma.class.findOne({where: {id: user.classId}})
+    if(!userClass)
+    return response.status(404).json({error: 'Turma do usuário não encontrado'});
+
+    if(bcrypt.compareSync(password, user.password))
+    return response.json(userViews.render(user, userClass));
+    
+    response.status(400).json({error: 'palavra-chave invalida'});
   },
 
   async update(request: Request, response: Response) {
@@ -45,42 +43,27 @@ export default {
       year
     } = request.body;
 
-    // try find user in database
-    const user = await prisma.users.findOne({
-      where: {
-        username
-      }
-    })
-
+    const user = await prisma.users.findOne({where: {username}})
     if(user)
-    return response.status(200).json({error: 'este usuário já existe'});
+    return response.status(400).json({error: 'este usuário já existe'});
 
-    // try find email in database
-    const userEmail = await prisma.users.findOne({
-      where: {
-        email
-      }
-    })
-
+    const userEmail = await prisma.users.findOne({where: {email}})
     if(userEmail)
-    return response.status(200).json({error: 'este email já existe'});
+    return response.status(400).json({error: 'este email já existe'});
 
-    // find class
     const classId = await prisma.class.findOne({
       where: {
         identity: `${course}${year}${time}`
       },
       select: {id: true}
     })
-    
     if(!classId)
     return response.status(404).json({error: `Turma do curso ${course} ${year} ${time} não encontrado`})
 
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    // save user
-    await prisma.users.create({
+    const newUser = await prisma.users.create({
       data: {
         name,
         username,
@@ -95,20 +78,10 @@ export default {
           }
         },
         password: hashedPassword
-      },
-      select: {
-        name: true,
-        username: true,
-        email: true,
-        phone: true,
-        gender: true,
-        avatar: true,
-        teacher: true,
-        class: true
       }
-    }).then((data) => {
-    
-      response.json(data);
     })
+
+    const newUserClass = await prisma.class.findOne({where: {id: newUser.classId}})
+    response.json(userViews.render(newUser, newUserClass!));
   }
 }
