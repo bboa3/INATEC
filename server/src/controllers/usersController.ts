@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 
 export default {
@@ -21,7 +21,7 @@ export default {
           response.status(400).json({error: 'palavra-chave invalida'});
         }
       } else {
-        response.status(201).json({error: 'usuário não encontrado'});
+        response.status(404).json({error: 'usuário não encontrado'});
       }
     })
   },
@@ -37,8 +37,12 @@ export default {
       email,
       phone,
       gender,
-      avatar,  
-      password
+      avatar, 
+      teacher, 
+      password,
+      course,
+      time,
+      year
     } = request.body;
 
     const user = await prisma.users.findOne({
@@ -50,21 +54,39 @@ export default {
     if(user)
     return response.status(200).json({error: 'este usuário já existe'});
 
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
+    await prisma.class.findOne({
+      where: {
+        identity: `${course}${year}${time}`
+      },
+    })
+    .then(data => {
+      if(!data)
+      return response.status(404).json({error: 'Turma do curso' + course + year + time + 'não encontrado'})
 
-    await prisma.users.create({
-      data: {
-        name,
-        username,
-        email,
-        phone,
-        gender,
-        avatar,  
-        password: hashedPassword
-      }
-    }).then((data) => {
-      response.json(data);
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(password, salt);
+
+      const classId = data.id;
+
+      prisma.users.create({
+        data: {
+          name,
+          username,
+          email,
+          phone,
+          gender,
+          avatar,
+          teacher, 
+          class: {
+            connect: {
+             id: classId
+            }
+          },
+          password: hashedPassword
+        }
+      }).then((data) => {
+        response.json(data);
+      })
     })
   }
 }
