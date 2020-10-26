@@ -49,6 +49,6 @@ export default {
       }
     })
 
-    response.json(classViews.render(newClass));
+    response.status(201).json(classViews.render(newClass));
   }
 }

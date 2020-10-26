@@ -5,7 +5,6 @@ import userViews from '../views/userViews';
 
 const prisma = new PrismaClient();
 
-
 export default {
   async index(request: Request, response: Response) {
     const { username, password } = request.body;
@@ -38,13 +37,13 @@ export default {
       email,
       phone,
       gender,
-      avatar, 
       teacher, 
       password,
       course,
       time,
       year
     } = request.body;
+    const avatar = request.file.filename;
 
     const user = await prisma.users.findOne({where: {username}})
     if(user)
@@ -53,6 +52,9 @@ export default {
     const userEmail = await prisma.users.findOne({where: {email}})
     if(userEmail)
     return response.status(400).json({error: 'este email já existe'});
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     if(teacher) {
       //save teachers
@@ -65,10 +67,10 @@ export default {
           gender,
           avatar,
           teacher,
-          password
+          password: hashedPassword
         }
       })
-      response.json(userViews.renderTeacher(newTeacher));
+      response.status(201).json(userViews.renderTeacher(newTeacher));
     } else {
       // save students
       const classId = await prisma.class.findOne({
@@ -79,9 +81,6 @@ export default {
       })
       if(!classId)
       return response.status(404).json({error: `Turma do curso ${course} ${year} ${time} não encontrado`})
-
-      const salt = bcrypt.genSaltSync(10);
-      const hashedPassword = bcrypt.hashSync(password, salt);
 
       const newUser = await prisma.users.create({
         data: {
@@ -102,7 +101,7 @@ export default {
       })
 
       const newUserClass = await prisma.class.findOne({where: {id: newUser.classId!}})
-      response.json(userViews.render(newUser, newUserClass!));
+      response.status(201).json(userViews.render(newUser, newUserClass!));
     }
   }
 }
