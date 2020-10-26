@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import userViews from '../views/userViews';
+import * as yup from 'yup';
 
 const prisma = new PrismaClient();
 
@@ -53,10 +54,32 @@ export default {
     if(userEmail)
     return response.status(400).json({error: 'este email já existe'});
 
+    const schema = yup.object().shape({
+      name: yup.string().required('Nome deve ter mínimo 6 máximo 30 caracteres').min(6).max(30),
+      username: yup.string().required('username deve ter mínimo 4 máximo 15 caracteres').min(4).max(15),
+      email: yup.string().email('inclua "@" no endereço de email').required('email obrigatório'),
+      phone: yup.string().required('Contacto obrigatório').min(6).max(15),
+      gender: yup.string().matches(/(Masculino|Feminino)/, {message: 'Género Masculino ou Feminino', excludeEmptyString: true}),
+      teacher: yup.boolean().required(''),
+      password: yup.string().min(8).max(15).required('A sua palavra-chave deve ter mínimo 8 máximo 15 caracteres')
+    })
+
+    await schema.validate({
+      name,
+      username,
+      email,
+      phone,
+      gender,
+      teacher,
+      password
+    }, {
+      abortEarly: false
+    })
+
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    if(teacher) {
+    if(teacher === 'true') {
       //save teachers
       const newTeacher = await prisma.users.create({
         data: {
@@ -66,7 +89,7 @@ export default {
           phone,
           gender,
           avatar,
-          teacher,
+          teacher: teacher === 'true',
           password: hashedPassword
         }
       })
@@ -90,7 +113,7 @@ export default {
           phone,
           gender,
           avatar,
-          teacher, 
+          teacher: teacher === 'true', 
           class: {
             connect: {
               id: classId.id

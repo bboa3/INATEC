@@ -2,6 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import routes from './routes';
 import path from 'path';
+import errorHandler from './errors/handler';
+import { config } from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
+
+dotenvExpand(config());
 
 const app = express();
 
@@ -11,5 +16,6 @@ app.use(routes)
 
 app.use('/uploads/images', express.static(path.join(__dirname, '..', 'uploads', 'images')));
 app.use('/uploads/pdf', express.static(path.join(__dirname, '..', 'uploads', 'pdf')));
+app.use(errorHandler);
 
-app.listen(3002);
+app.listen(process.env.PORT);
