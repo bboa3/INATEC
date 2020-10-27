@@ -4,6 +4,7 @@ import multer from 'multer';
 import usersController from './controllers/usersController';
 import classController from './controllers/classController';
 import subjectsController from './controllers/subjectsController';
+import commentsController from './controllers/commentsController';
 
 import avatarUploadConfig from './config/avatar';
 
@@ -13,6 +14,9 @@ const avatarUpload = multer(avatarUploadConfig);
 
 routes.post('/inatec/get/subjects', subjectsController.index);
 routes.post('/inatec/create/subjects', subjectsController.create);
+
+routes.get('/inatec/comments', commentsController.index);
+routes.post('/inatec/comments', commentsController.create);
 
 routes.post('/inatec/login', usersController.index);
 routes.put('/inatec/update', usersController.update);

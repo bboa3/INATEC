@@ -8,7 +8,7 @@ export default {
     const { subjectsNumber, classId } = request.body;
 
     const subjects = await prisma.subjects.findMany({ 
-      where: { id: classId },
+      where: { classId },
       take: Number(subjectsNumber)
     })
 
