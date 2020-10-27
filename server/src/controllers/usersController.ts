@@ -15,6 +15,9 @@ export default {
     if(!user)
     return response.status(404).json({error: 'usuário não encontrado'});
 
+    if(!bcrypt.compareSync(password, user.password))
+    return response.status(400).json({error: 'palavra-chave invalida'});
+
     if(user.teacher)
     return response.json(userViews.renderTeacher(user));
 
@@ -22,10 +25,7 @@ export default {
     if(!userClass)
     return response.status(404).json({error: 'Turma do usuário não encontrado'});
 
-    if(bcrypt.compareSync(password, user.password))
-    return response.json(userViews.render(user, userClass));
-    
-    response.status(400).json({error: 'palavra-chave invalida'});
+    response.json(userViews.render(user, userClass));
   },
 
   async update(request: Request, response: Response) {
