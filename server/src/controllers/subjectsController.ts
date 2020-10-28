@@ -36,6 +36,7 @@ export default {
         module,
         pdf,
         description,
+        comments: [],
         class: {
           connect: {
             id: classId

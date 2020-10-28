@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, JsonArray } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -7,7 +7,8 @@ export default {
   async update(request: Request, response: Response) {
     const {
       id, // it is a subject id to set comment
-      commentIndex
+      commentIndex,
+      responseIndex
     } = request.body;
 
     const subject = await prisma.subjects.findOne({
@@ -15,11 +16,11 @@ export default {
       select: { comments: true }
     })
     if(!subject)
-    return response.status(400).json({error: 'Problemas para encontrar o tema que pretende adicionar like no  comentário'});
+    return response.status(400).json({error: 'Problemas para encontrar o tema que pretende responder o comentário'});
 
     const commentsArray = subject.comments as any
 
-    commentsArray[commentIndex].likes += 1;
+    commentsArray[commentIndex].responses[responseIndex].likes += 1;
 
     const subjectCommented = await prisma.subjects.update({
       where: { id },
@@ -35,10 +36,11 @@ export default {
   },
 
   async create(request: Request, response: Response) {
-    const { 
+    const {
       id, // it is a subject id to set comment
       userId,
-      comment,
+      commentIndex,
+      commentResponse
     } = request.body;
 
     const subject = await prisma.subjects.findOne({
@@ -46,16 +48,14 @@ export default {
       select: { comments: true }
     })
     if(!subject)
-    return response.status(400).json({error: 'Problemas para encontrar o tema que pretende comentar'});
+    return response.status(400).json({error: 'Problemas para encontrar o tema que pretende responder o comentário'});
 
     const commentsArray = subject.comments as any
 
-    commentsArray.push({
+    commentsArray[commentIndex].responses.push({
+      likes: 0,
       userId,
-      comment, 
-      commented_at: new Date, 
-      responses: [],
-      likes: 0
+      commentResponse
     });
 
     const subjectCommented = await prisma.subjects.update({
