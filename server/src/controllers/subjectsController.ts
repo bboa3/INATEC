@@ -29,6 +29,18 @@ export default {
       classId
     } = request.body;
 
+    const userData = await prisma.users.findOne({
+      where: {
+        username
+      },
+      select: {
+        name: true,
+        teacher: true
+      }
+    })
+    if(!userData)
+    return response.status(404).json({error: 'Desculpa os seus dados não existem no sistema'});
+
     const subject = await prisma.subjects.create({
       data: {
         titleType,
@@ -37,6 +49,8 @@ export default {
         pdf,
         description,
         comments: [],
+        name: userData.name,
+        teacher: userData.teacher,
         class: {
           connect: {
             id: classId

@@ -17,11 +17,9 @@ export default {
         .max(30, 'Nome deve ter mínimo 6 máximo 30 caracteres'),
       username: yup.string()
         .required('username obrigatório')
-        .lowercase('somente letras minúsculas para username')
         .min(4, 'username deve ter mínimo 4 máximo 15 caracteres')
         .max(15, 'username deve ter mínimo 4 máximo 15 caracteres'),
       email: yup.string()
-        .lowercase('somente letras minúsculas para endereço de Email')
         .email('inclua "@" no endereço de email')
         .required('email obrigatório'),
       phone: yup.string()

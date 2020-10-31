@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Comment from '../../components/Chat/Comment';
 import AddSubject from '../../components/Chat/AddSubject';
@@ -9,16 +9,25 @@ import {
   Main,
   Wrapper
 } from '../../components/AppLayout/styles';
+import { AuthContext } from '../../contexts';
 
 const Chats: React.FC = () => {
+  const { user, uClass } = useContext(AuthContext).data;
   const [ pushDown, setPushDown ] = useState('push-up');
+
+  const { avatar, username } = user;
+  const { course, year, time } = uClass;
   
   return (
     <Container>
       <AddSubject 
         setPushDown={setPushDown}
         pushDown={pushDown}
-        username="arlindojos"
+        username={username}
+        avatar={avatar}
+        course={course}
+        year={year}
+        time={time}
       />
 
       <Main id={pushDown}>

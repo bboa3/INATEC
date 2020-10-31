@@ -1,8 +1,6 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useContext } from 'react';
 import { Avatar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-
-import manChef from '../../../assets/images/man-chef.svg';
 import Input from '../../../components/Input/styles';
 import { 
   Container,
@@ -14,30 +12,67 @@ import {
   Course
 } from './styles';
 
+import { AuthContext } from '../../../contexts';
+
 interface Props {
   setPushDown: React.Dispatch<React.SetStateAction<string>>;
   pushDown: string;
   username: string;
+  avatar: string;
+  course: string;
+  time: string
+  year: string;
 }
 
-const AddSubject: React.FC<Props> = ({setPushDown, pushDown, username}) => {
+const AddSubject: React.FC<Props> = ({
+  setPushDown,
+  pushDown, 
+  username, 
+  avatar, 
+  course, 
+  time, 
+  year
+}) => {
   const [ title, setTitle ] = useState('');
   const [ module, setModule ] = useState('');
-  const [ file, setFile ] = useState('');
-  const [ subjectTip, setSubjectTip ] = useState('');
+  const [ pdf, setPdf ] = useState('');
+  const [ titleType, setTitleType ] = useState('');
   const [ description, setDescription ] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    // async function send() {
+    //   socket.emit('newSubject', {
+    //     classId: "1fac9f18-8e02-48cb-aebd-5388079f0349",
+    //     username: "dortt",
+    //     titleType,
+    //     title,
+    //     module,
+    //     pdf,
+    //     description
+    //   });
+    // }
+
+    // send().then(() => {
+    //   setTitleType('');
+    //   setTitle('');
+    //   setModule('');
+    //   setPdf('');
+    //   setDescription('');
+    // })
   }
+
+  // socket.on('getSubjects', (subjects: any) => {
+  //   console.log(subjects);
+  // })
 
   return (
     <Container>
       <TopSection>
         <Profile>
           <Avatar>
-            <img src={manChef} alt="Profile"/>
+            <img src={avatar} alt="Profile"/>
           </Avatar>
         <span>{username}</span>
         </Profile>
@@ -53,8 +88,8 @@ const AddSubject: React.FC<Props> = ({setPushDown, pushDown, username}) => {
       </TopSection>
 
       <Course>
-        <h2>Tecnologias de informação e comunicação</h2>
-        <span>1º ano, turma da manhã</span>
+        <h2>{course}</h2>
+      <span>{year}, {time}</span>
       </Course>
 
       <Form onSubmit={handleSubmit}>
@@ -65,8 +100,8 @@ const AddSubject: React.FC<Props> = ({setPushDown, pushDown, username}) => {
                 name="subjectTip"
                 placeholder="tipo do tema"
                 list='subjectTips'
-                value={subjectTip}
-                onChange={ (e) => { setSubjectTip(e.target.value) }}
+                value={titleType}
+                onChange={ (e) => { setTitleType(e.target.value) }}
                 required
               />
               <datalist id="subjectTips">
@@ -108,8 +143,8 @@ const AddSubject: React.FC<Props> = ({setPushDown, pushDown, username}) => {
                 name="file"
                 type="file"
                 placeholder="pdf"
-                value={file}
-                onChange={ (e) => { setFile(e.target.value) }}
+                value={pdf}
+                onChange={ (e) => { setPdf(e.target.value) }}
               />
             </div>
 

@@ -8,7 +8,7 @@ export default {
     const {
       id, // it is a subject id to set comment
       commentIndex,
-      responseIndex
+      responseTo
     } = request.body;
 
     const subject = await prisma.subjects.findOne({
@@ -20,7 +20,7 @@ export default {
 
     const commentsArray = subject.comments as any
 
-    commentsArray[commentIndex].responses[responseIndex].likes += 1;
+    commentsArray[commentIndex].responses[responseTo].likes += 1;
 
     const subjectCommented = await prisma.subjects.update({
       where: { id },
@@ -52,7 +52,7 @@ export default {
 
     const commentsArray = subject.comments as any
 
-    commentsArray[commentIndex].responses.push({
+    commentsArray[commentIndex].responses.unshift({
       likes: 0,
       userId,
       commentResponse

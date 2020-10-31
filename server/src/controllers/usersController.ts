@@ -30,6 +30,7 @@ export default {
 
   async update(request: Request, response: Response) {
     const { username, password } = request.body;
+    const avatar = request.file.filename;
   },
 
   async create(request: Request, response: Response) {
@@ -45,7 +46,13 @@ export default {
       time,
       year
     } = request.body;
-    const avatar = request.file.filename;
+
+    let avatar = '';
+    if(gender === 'Feminino') {
+      avatar = 'woman.svg'
+    } else {
+      avatar = 'man.svg'
+    }
 
     const user = await prisma.users.findOne({where: {username}})
     if(user)
@@ -68,7 +75,7 @@ export default {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    if(teacher === 'true') {
+    if(teacher) {
       //save teachers
       const newTeacher = await prisma.users.create({
         data: {
@@ -78,7 +85,7 @@ export default {
           phone,
           gender,
           avatar,
-          teacher: teacher === 'true',
+          teacher,
           password: hashedPassword
         }
       })
@@ -91,8 +98,9 @@ export default {
         },
         select: {id: true}
       })
+    
       if(!classId)
-      return response.status(404).json({error: `Turma do curso ${course} ${year} ${time} não encontrado`})
+      return response.status(404).send({error: `Turma do curso ${course} ${year} ${time} não encontrado`})
 
       const newUser = await prisma.users.create({
         data: {
@@ -102,7 +110,7 @@ export default {
           phone,
           gender,
           avatar,
-          teacher: teacher === 'true', 
+          teacher, 
           class: {
             connect: {
               id: classId.id

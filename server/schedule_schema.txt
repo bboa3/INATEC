@@ -1,77 +1,57 @@
-"schedule": [
+"schedule": {
+  "monday": [
     {
-      "2ª feira": {
-        "teacher": [
-          {
-            "name": "Telma",
-            "time": "07:00 - 07:45, 07:45 - 08:30, 08:40 - 09:25",
-            "discipline": "HST"
-          },
-          {
-            "name": "Chilundo",
-            "time": "09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
-            "discipline": "CCR"
-          }
-        ]
-      }
+      "name": "Telma",
+      "time": "07:00 - 07:45, 07:45 - 08:30, 08:40 - 09:25",
+      "discipline": "HST"
     },
     {
-      "3ª feira": {
-        "teacher": [
-          {
-            "name": "Simbine",
-            "time": "07:00 - 07:45, 07:45 - 08:30, 08:40 - 09:25, 09:25 - 10:10",
-            "discipline": "AFECC"
-          },
-          {
-            "name": "Chilundo",
-            "time": "10:20 - 11:05, 11:05 - 11:55",
-            "discipline": "CCR"
-          }
-        ]
-      }
+      "name": "Chilundo",
+      "time": "09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
+      "discipline": "CCR"
+    }
+  ],
+  "tuesday": [
+    {
+      "name": "Simbine",
+      "time": "07:00 - 07:45, 07:45 - 08:30, 08:40 - 09:25, 09:25 - 10:10",
+      "discipline": "AFECC"
     },
     {
-      "4ª feira": {
-        "teacher": [
-          {
-            "name": "Chilundo",
-            "time": "07:00 - 07:45, 07:45 - 08:30, 08:40 - 09:25, 09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
-            "discipline": "CCR"
-          }
-        ]
-      }
+      "name": "Chilundo",
+      "time": "10:20 - 11:05, 11:05 - 11:55",
+      "discipline": "CCR"
+    }
+  ],
+  "wednesday": [
+    {
+      "name": "Chilundo",
+      "time": "07:00 - 07:45, 07:45 - 08:30, 08:40 - 09:25, 09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
+      "discipline": "CCR"
+    }
+  ],
+  "thursday": [
+    {
+      "name": "Paunde",
+      "time": "07:00 - 07:45, 07:45 - 08:30",
+      "discipline": "RPESVPC"
     },
     {
-      "5ª feira": {
-        "teacher": [
-          {
-            "name": "Paunde",
-            "time": "07:00 - 07:45, 07:45 - 08:30",
-            "discipline": "RPESVPC"
-          },
-          {
-            "name": "Hélio",
-            "time": "08:40 - 09:25, 09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
-            "discipline": "ATFEA"
-          }
-        ]
-      }
+      "name": "Hélio",
+      "time": "08:40 - 09:25, 09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
+      "discipline": "ATFEA"
+    }
+  ],
+  "friday": [
+    {
+      "name": "Garcias",
+      "time": "07:00 - 07:45, 07:45 - 08:30",
+      "discipline": "UUSSPP"
     },
     {
-      "6ª feira": {
-        "teacher": [
-          {
-            "name": "Garcias",
-            "time": "07:00 - 07:45, 07:45 - 08:30",
-            "discipline": "UUSSPP"
-          },
-          {
-            "name": "Simbine",
-            "time": "08:40 - 09:25, 09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
-            "discipline": "AFECC"
-          }
-        ]
-      }
+      "name": "Simbine",
+      "time": "08:40 - 09:25, 09:25 - 10:10, 10:20 - 11:05, 11:05 - 11:55",
+      "discipline": "AFECC"
     }
   ]
+}

@@ -50,7 +50,7 @@ export default {
 
     const commentsArray = subject.comments as any
 
-    commentsArray.push({
+    commentsArray.unshift({
       userId,
       comment, 
       commented_at: new Date, 

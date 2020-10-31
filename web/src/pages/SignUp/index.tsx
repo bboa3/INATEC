@@ -1,12 +1,21 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import FormContainer from '../../components/FormContainer';
 import Input from '../../components/Input/styles';
+import Alert from '../../components/Alert';
 import { Toggle, CheckMark } from '../Login/styles';
 import { 
   Form, 
 } from './styles';
 
+import api from '../../services/api';
+import HandleErrors from '../../errors/handler';
+
+import { AuthContext } from '../../contexts';
+
 const SignUp: React.FC = () => {
+  const { data, setData } = useContext(AuthContext);
+  const history = useHistory();
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ phone, setPhone ] = useState('');
@@ -21,6 +30,13 @@ const SignUp: React.FC = () => {
   const [ teacher, setTeacher ] = useState(false);
   const [ classInfo, setClassInfo ] = useState({display: 'block'});
 
+  const [ alertMessage, setAlertMessage ] = useState('');
+
+  const [ alertStyles, setAlertStyles ] = useState({
+    display: 'none', 
+    background: 'var(--light-blue)'
+  });
+
   useEffect( () => {
     if(teacher === true)
     return setClassInfo({display: 'none'});
@@ -30,10 +46,74 @@ const SignUp: React.FC = () => {
 
   const HandleSignUp = (e: FormEvent) => {
     e.preventDefault();
+
+    if(password !== cfrPassword) {
+      setAlertMessage('As suas palavras-chaves não se correspondem ')
+      setAlertStyles({
+        display: 'block',
+        background: '#FFBFCB'
+      })
+    } else {
+      api.post('/inatec/create/user', {
+        name,
+        username,
+        email,
+        phone,
+        gender,
+        teacher,
+        course,
+        time,
+        year,
+        password
+      }).then((response) => {
+        setName('')
+        setUsername('')
+        setEmail('')
+        setPhone('')
+        setGender('')
+        setCourse('')
+        setTime('')
+        setYear('')
+        setPassword('')
+
+        setAlertMessage('Inscrição feita com sucesso')
+        setAlertStyles({
+          display: 'block',
+          background: 'var(--light-blue)'
+        })
+
+        if(data.user.teacher === true) {
+          const user = response.data;
+          setData({...data, user: user});
+
+          history.push(`/in/all-class`);
+        } else {
+          const user = response.data;
+          const uClass = response.data.class;
+
+          setData({...data, user: user, uClass: uClass});
+
+          history.push(`/in/class/${data.uClass.id}`);
+        }
+      }).catch((err) => {
+        const error = HandleErrors.signUp(err.response.data.errors, err.response.data.error);
+        setAlertMessage(error);
+
+        setAlertStyles({
+          display: 'block',
+          background: '#FFBFCB'
+        })
+      })
+    }
   }
 
   return (
     <>
+      <Alert 
+        styles={alertStyles}
+        message={alertMessage}
+      />
+
       <FormContainer
         Form={
           <Form onSubmit={HandleSignUp}>
@@ -55,7 +135,7 @@ const SignUp: React.FC = () => {
                 onChange={ (e) => { setEmail(e.target.value) }}
                 required
               />
-
+              
               <Input 
                 name="phone" 
                 type="tel"
@@ -89,6 +169,7 @@ const SignUp: React.FC = () => {
                 name="accessKey"
                 type='password'
                 placeholder="Chave de acesso"
+                autoComplete="accessKey key"
                 value={accessKey}
                 onChange={ (e) => { setAccessKey(e.target.value) }}
                 required
@@ -98,6 +179,7 @@ const SignUp: React.FC = () => {
                 name="password"
                 type='password' 
                 placeholder="palavra-chave"
+                autoComplete="new-password"
                 value={password}
                 onChange={ (e) => { setPassword(e.target.value) }}
                 required
@@ -107,6 +189,7 @@ const SignUp: React.FC = () => {
                 name="cfrPassword"
                 type='password'
                 placeholder="confirmar palavra-chave"
+                autoComplete="new-password"
                 value={cfrPassword}
                 onChange={ (e) => { setCfrPassword(e.target.value) }}
                 required
@@ -165,7 +248,7 @@ const SignUp: React.FC = () => {
               </div>
 
               <div style={classInfo}>
-                <label htmlFor="course">Selecione o ano</label>
+                <label htmlFor="year">Selecione o ano</label>
                 <Input 
                   name="year" 
                   id="year" 
