@@ -71,7 +71,7 @@ const Class: React.FC = () => {
               </SubjectHeader>
 
               {
-                data.subjects.map((subject, index) => (
+                data.subjects.map((subject) => (
                   <Content>
                     <Link to={`/chats/8`}>
                       <ContentHeader>
@@ -80,20 +80,19 @@ const Class: React.FC = () => {
                         </AvatarContainer>
                         <div>
                           <div>
-                            <h3>José Carvalho</h3>
-                            <span>Aluno</span>
+                            <h3>{subject.name}</h3>
+                            <span>{subject.teacher ? 'Docente' : 'Aluno'}</span>
                           </div>
-                          <div>CCCR</div>
+                          <div>{subject.module}</div>
                         </div>
                       </ContentHeader>
 
                       <div>
-                        <h2>Circuito de tomadas Monofasicas</h2>
+                        <h2>{subject.title}</h2>
                         <p>
-                          Estou tentando fazer o Esquema  funcional de 6 tomadas, 
-                          conheço a diferença dos 3 esquemas ...
+                          {subject.description}
                         </p>
-                        <span>5 de Out</span>
+                        <span>{subject.updated_at}</span>
                       </div>
                     </Link>
                   </Content>

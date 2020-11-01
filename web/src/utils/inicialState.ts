@@ -89,6 +89,8 @@ const INICIAL_STATE = {
         ],
 
         userId: "",
+        name: "",
+        teacher: false,
         classId: "",
         created_at: "",
         updated_at: ""

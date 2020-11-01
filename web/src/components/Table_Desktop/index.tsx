@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../contexts';
 import { Table } from './styles';
 
 const TableDesktop: React.FC = () => {
+  const { schedule } = useContext(AuthContext).data.uClass;
+  
   return (
     <Table>
       <thead>

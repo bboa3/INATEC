@@ -1,197 +1,132 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Table } from './styles';
+import { AuthContext } from '../../contexts';
 
 const TableMobile: React.FC = () => {
+  const { schedule } = useContext(AuthContext).data.uClass;
+
   return (
     <Table>
-      <tbody>
-        <tr>
-          <th rowSpan={12}>2ª feira</th>
-          <td rowSpan={2}>07:00 - 07:45</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>07:45 - 08:30</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>08:40 - 09:25</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>09:25 - 10:10</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>10:20 - 11:05</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>11:05 - 11:55</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-      </tbody>
-
-      <tbody>
-        <tr>
-          <th rowSpan={12}>3ª feira</th>
-          <td rowSpan={2}>07:00 - 07:45</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>07:45 - 08:30</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>08:40 - 09:25</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>09:25 - 10:10</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>10:20 - 11:05</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>11:05 - 11:55</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-      </tbody>
-
-      <tbody>
-        <tr>
-          <th rowSpan={12}>4ª feira</th>
-          <td rowSpan={2}>07:00 - 07:45</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>07:45 - 08:30</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>08:40 - 09:25</td>
-          <td>Disciplina</td>
-          <td>HST</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Telma</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>09:25 - 10:10</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>10:20 - 11:05</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-        
-        <tr>
-          <td rowSpan={2}>11:05 - 11:55</td>
-          <td>Disciplina</td>
-          <td>CCCR</td>
-        </tr>
-        <tr>
-          <td>Docente</td>
-          <td>Chilundo</td>
-        </tr>
-      </tbody>
+      {
+        schedule.monday.map(teacher =>  (
+          <tbody>
+            <tr>
+              <th rowSpan={13}>2ª feira</th>
+            </tr>
+            {
+              teacher.time.split(",").map(time => (
+                <>
+                  <tr>
+                    <td rowSpan={2}>{time}</td>
+                    <td>Disciplina</td>
+                    <td>{teacher.discipline}</td>
+                  </tr>
+                  <tr>
+                    <td>Docente</td>
+                    <td>{teacher.name}</td>
+                  </tr>
+                </>
+              ))
+            }
+          </tbody>
+        ))
+      }
+      {
+        schedule.tuesday.map(teacher =>  (
+          <tbody>
+            <tr>
+              <th rowSpan={13}>3ª feira</th>
+            </tr>
+            {
+              teacher.time.split(",").map(time => (
+                <>
+                  <tr>
+                    <td rowSpan={2}>{time}</td>
+                    <td>Disciplina</td>
+                    <td>{teacher.discipline}</td>
+                  </tr>
+                  <tr>
+                    <td>Docente</td>
+                    <td>{teacher.name}</td>
+                  </tr>
+                </>
+              ))
+            }
+          </tbody>
+        ))
+      }
+      {
+        schedule.wednesday.map(teacher =>  (
+          <tbody>
+            <tr>
+              <th rowSpan={13}>4ª feira</th>
+            </tr>
+            {
+              teacher.time.split(",").map(time => (
+                <>
+                  <tr>
+                    <td rowSpan={2}>{time}</td>
+                    <td>Disciplina</td>
+                    <td>{teacher.discipline}</td>
+                  </tr>
+                  <tr>
+                    <td>Docente</td>
+                    <td>{teacher.name}</td>
+                  </tr>
+                </>
+              ))
+            }
+          </tbody>
+        ))
+      }
+      {
+        schedule.thursday.map(teacher =>  (
+          <tbody>
+            <tr>
+              <th rowSpan={13}>5ª feira</th>
+            </tr>
+            {
+              teacher.time.split(",").map(time => (
+                <>
+                  <tr>
+                    <td rowSpan={2}>{time}</td>
+                    <td>Disciplina</td>
+                    <td>{teacher.discipline}</td>
+                  </tr>
+                  <tr>
+                    <td>Docente</td>
+                    <td>{teacher.name}</td>
+                  </tr>
+                </>
+              ))
+            }
+          </tbody>
+        ))
+      }
+      {
+        schedule.friday.map(teacher =>  (
+          <tbody>
+            <tr>
+              <th rowSpan={13}>6ª feira</th>
+            </tr>
+            {
+              teacher.time.split(",").map(time => (
+                <>
+                  <tr>
+                    <td rowSpan={2}>{time}</td>
+                    <td>Disciplina</td>
+                    <td>{teacher.discipline}</td>
+                  </tr>
+                  <tr>
+                    <td>Docente</td>
+                    <td>{teacher.name}</td>
+                  </tr>
+                </>
+              ))
+            }
+          </tbody>
+        ))
+      }
     </Table>
   )
 }

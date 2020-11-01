@@ -13,6 +13,7 @@ import {
 } from './styles';
 
 import { AuthContext } from '../../../contexts';
+import api from '../../../services/api';
 
 interface Props {
   setPushDown: React.Dispatch<React.SetStateAction<string>>;
@@ -33,6 +34,7 @@ const AddSubject: React.FC<Props> = ({
   time, 
   year
 }) => {
+  const { data, setData } = useContext(AuthContext);
   const [ title, setTitle ] = useState('');
   const [ module, setModule ] = useState('');
   const [ pdf, setPdf ] = useState('');
@@ -42,30 +44,36 @@ const AddSubject: React.FC<Props> = ({
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // async function send() {
-    //   socket.emit('newSubject', {
-    //     classId: "1fac9f18-8e02-48cb-aebd-5388079f0349",
-    //     username: "dortt",
-    //     titleType,
-    //     title,
-    //     module,
-    //     pdf,
-    //     description
-    //   });
-    // }
+    const { username } = data.user;
+    const classId = data.uClass.id;
 
-    // send().then(() => {
-    //   setTitleType('');
-    //   setTitle('');
-    //   setModule('');
-    //   setPdf('');
-    //   setDescription('');
+    api.post('/inatec/create/subjects', {
+      classId,
+      username,
+      titleType,
+      title,
+      module,
+      pdf,
+      description
+    })
+    .then(response => {
+      setTitleType('');
+      setTitle('');
+      setModule('');
+      setPdf('');
+      setDescription('');
+
+      const subjects = response.data;
+
+      setData({...data, subjects: subjects })
+    })
+
+    // socket.emit('newSubject', {
+    // });
+    // socket.on('getSubjects', (subjects: Subjects) => {
+    //   console.log(subjects);
     // })
   }
-
-  // socket.on('getSubjects', (subjects: any) => {
-  //   console.log(subjects);
-  // })
 
   return (
     <Container>

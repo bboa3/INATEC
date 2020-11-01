@@ -42,6 +42,13 @@ declare module 'user-data' {
     module: string;
     pdf: string;
     description: string;
+
+    userId: string;
+    name: string;
+    teacher: boolean;
+    classId: string;
+    created_at: string;
+    updated_at: string;
     
     comments: {
       likes: number;
@@ -55,10 +62,5 @@ declare module 'user-data' {
         commentResponse: string;
       }[];
     }[];
-
-    userId: string;
-    classId: string;
-    created_at: string;
-    updated_at: string;
   }
 }
