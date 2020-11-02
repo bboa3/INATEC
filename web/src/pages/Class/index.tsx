@@ -18,7 +18,6 @@ import {
   ContentHeader
 } from './styles';
 import roadToKnowledgeImg from '../../assets/images/undraw_road_to_knowledge_m8s0.svg';
-import avatarImg from '../../assets/images/man-chef.svg'
 import { AuthContext } from '../../contexts';
 import api from '../../services/api';
 
@@ -28,39 +27,38 @@ const Class: React.FC = () => {
   const [ pushDown, setPushDown ] = useState('push-up');
   const [ subjectsNumber, setSubjectsNumber ] = useState(2);
 
-  const { avatar, username } = data.user;
-  const { id, course, year, time } = data.uClass;
+  const { user, uClass } = data;
 
   useEffect(() => {
     api.post('inatec/get/subjects', {
       subjectsNumber,
-      classId: id,
+      classId: uClass.id,
     })
     .then(response => {
       const subjects = response.data
 
       setData({...data, subjects: subjects})
     }).catch (err => {
-
+      console.log(err);
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, subjectsNumber]) 
+  }, [subjectsNumber]) 
 
   return (
     <Container>
       <AddSubject 
         setPushDown={setPushDown}
         pushDown={pushDown}
-        username={username}
-        avatar={avatar}
-        course={course}
-        year={year}
-        time={time}
+        username={user.username}
+        avatar={user.avatar}
+        course={uClass.course}
+        year={uClass.year}
+        time={uClass.time}
       />
 
       <Main id={pushDown}>
         <Wrapper>
-          <h1>{course}</h1>
+          <h1>{uClass.course}</h1>
           <ClassBlock>
             <Subject>
               <SubjectHeader>
@@ -71,32 +69,39 @@ const Class: React.FC = () => {
               </SubjectHeader>
 
               {
-                data.subjects.map((subject) => (
-                  <Content>
-                    <Link to={`/chats/8`}>
-                      <ContentHeader>
-                        <AvatarContainer>
-                          <img src={avatarImg} alt="Criador do tema"/>
-                        </AvatarContainer>
-                        <div>
-                          <div>
-                            <h3>{subject.name}</h3>
-                            <span>{subject.teacher ? 'Docente' : 'Aluno'}</span>
-                          </div>
-                          <div>{subject.module}</div>
-                        </div>
-                      </ContentHeader>
+                data.subjects.map((subject, index) => {
+                  let titleParts = '';
+                  subject.title.split(" ").map(word => {
+                    return titleParts = `${titleParts}-${word}`;
+                  })
 
-                      <div>
-                        <h2>{subject.title}</h2>
-                        <p>
-                          {subject.description}
-                        </p>
-                        <span>{subject.updated_at}</span>
-                      </div>
-                    </Link>
-                  </Content>
-                ))
+                  return (
+                    <Content>
+                      <Link to={`/in/chats/${titleParts}/${subject.id}`}>
+                        <ContentHeader>
+                          <AvatarContainer>
+                            <img src={subject.avatar} alt="Criador do tema"/>
+                          </AvatarContainer>
+                          <div>
+                            <div>
+                              <h3>{subject.name}</h3>
+                              <span>{subject.teacher ? 'Docente' : 'Aluno'}</span>
+                            </div>
+                            <div>{subject.module}</div>
+                          </div>
+                        </ContentHeader>
+
+                        <div>
+                          <h2>{subject.title}</h2>
+                          <p>
+                            {subject.description}
+                          </p>
+                          <span>{subject.updated_at}</span>
+                        </div>
+                      </Link>
+                    </Content>
+                  )
+                })
               }
               <button onClick={() => { setSubjectsNumber(subjectsNumber + 3) }}>
                 Mostrar mais 3

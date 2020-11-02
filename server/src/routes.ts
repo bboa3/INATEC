@@ -14,6 +14,7 @@ const routes = Router();
 const avatarUpload = multer(avatarUploadConfig);
 
 routes.post('/inatec/get/subjects', subjectsController.index);
+routes.get('/inatec/get/subjects/:id', subjectsController.show);
 routes.post('/inatec/create/subjects', subjectsController.create);
 
 routes.put('/inatec/comments', commentsController.update);

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import subjectsViews from '../views/subjectsViews';
 
 const prisma = new PrismaClient();
 
@@ -10,7 +11,7 @@ export default {
       commentIndex
     } = request.body;
 
-    const subject = await prisma.subjects.findOne({
+    const subject = await prisma.subject.findOne({
       where: {id},
       select: { comments: true }
     })
@@ -21,7 +22,7 @@ export default {
 
     commentsArray[commentIndex].likes += 1;
 
-    const subjectCommented = await prisma.subjects.update({
+    const subjectCommented = await prisma.subject.update({
       where: { id },
       data: {
         comments: commentsArray,
@@ -41,7 +42,7 @@ export default {
       comment,
     } = request.body;
 
-    const subject = await prisma.subjects.findOne({
+    const subject = await prisma.subject.findOne({
       where: {id},
       select: { comments: true }
     })
@@ -58,7 +59,7 @@ export default {
       likes: 0
     });
 
-    const subjectCommented = await prisma.subjects.update({
+    const subjectCommented = await prisma.subject.update({
       where: { id },
       data: {
         comments: commentsArray,
@@ -68,6 +69,6 @@ export default {
     if(!subjectCommented)
     return response.status(400).json({error: 'Erro au adicionar o comentário'});
 
-    response.json(subjectCommented);
+    response.json(subjectsViews.render(subjectCommented));
   }
 }

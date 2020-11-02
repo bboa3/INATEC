@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Users {
@@ -16,7 +16,7 @@ model Users {
   gender      String 
   password    String
   teacher     Boolean
-  avatar      String
+  avatar      String? 
   subjets     Subject[]
   class       Class? @relation(fields: [classId], references: [id])
   classId     String?

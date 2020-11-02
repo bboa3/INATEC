@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { PrismaClient, JsonArray } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import subjectViews from '../views/subjectsViews';
 
 const prisma = new PrismaClient();
 
@@ -7,7 +8,7 @@ export default {
   async index(request: Request, response: Response) {
     const { subjectsNumber, classId } = request.body;
 
-    const subjects = await prisma.subjects.findMany({ 
+    const subjects = await prisma.subject.findMany({ 
       where: { classId },
       take: Number(subjectsNumber)
     })
@@ -16,6 +17,19 @@ export default {
     return response.status(404).json({error: 'Não foi encontrado nenhuma tema'});
 
     response.json(subjects);
+  },
+
+  async show(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const subject = await prisma.subject.findOne({ 
+      where: { id }
+    })
+
+    if(!subject)
+    return response.status(404).json({error: 'Tema não encontrado'});
+
+    response.json(subjectViews.render(subject));
   },
 
   async create(request: Request, response: Response) {
@@ -29,19 +43,18 @@ export default {
       classId
     } = request.body;
 
-    const userData = await prisma.users.findOne({
-      where: {
-        username
-      },
+    const user = await prisma.users.findOne({
+      where: { username },
       select: {
         name: true,
-        teacher: true
+        teacher: true,
+        avatar: true
       }
     })
-    if(!userData)
+    if(!user)
     return response.status(404).json({error: 'Desculpa os seus dados não existem no sistema'});
 
-    const subject = await prisma.subjects.create({
+    await prisma.subject.create({
       data: {
         titleType,
         title,
@@ -49,8 +62,9 @@ export default {
         pdf,
         description,
         comments: [],
-        name: userData.name,
-        teacher: userData.teacher,
+        name: user.name,
+        teacher: user.teacher,
+        avatar: user.avatar,
         class: {
           connect: {
             id: classId
@@ -63,7 +77,12 @@ export default {
         }
       }
     })
+    
+    const subjects = await prisma.subject.findMany({ 
+      where: { classId },
+      take: 3
+    })
 
-    response.status(201).json(subject);
+    response.status(201).json(subjectViews.renderMany(subjects));
   }
 }

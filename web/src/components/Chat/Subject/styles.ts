@@ -4,12 +4,12 @@ export const Container = styled.div`
   margin: 1.4rem 0;
 
   > p {
-    font-family: Archivo;
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
 
     > span {
       font-weight: bold;
+      color: var(--blue-green);
       margin-right: 0.4rem;
     }
   }
@@ -49,6 +49,7 @@ export const Container = styled.div`
         border-radius: 0.9rem;
         
         border: none;
+        outline: 0;
         opacity: 0.9;
         
         &:hover {

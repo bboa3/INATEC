@@ -1,5 +1,4 @@
-import { Users, Class } from '@prisma/client';
-import classViews from './userViews'
+import { Class } from '@prisma/client';
 
 export default {
   render(clas: Class) {

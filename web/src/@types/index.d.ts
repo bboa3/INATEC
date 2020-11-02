@@ -35,7 +35,7 @@ declare module 'user-data' {
     };
   }
 
-  export interface Subjects {
+  export interface Subject {
     id: string;
     titleType: string;
     title: string;
@@ -45,6 +45,7 @@ declare module 'user-data' {
 
     userId: string;
     name: string;
+    avatar: string;
     teacher: boolean;
     classId: string;
     created_at: string;

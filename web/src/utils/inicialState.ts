@@ -91,11 +91,45 @@ const INICIAL_STATE = {
         userId: "",
         name: "",
         teacher: false,
+        avatar: "",
         classId: "",
         created_at: "",
         updated_at: ""
       }
-    ]
+    ],
+
+    subject: {
+      id: "",
+      titleType: "",
+      title: "",
+      module: "",
+      pdf: "",
+      description: "",
+      
+      comments: [
+        {
+          likes: 0,
+          userId: "",
+          comment: "",
+          commented_at: "",
+          responses: [
+            {
+              likes: 0,
+              userId: "",
+              commentResponse: "",
+            }
+          ]
+        }
+      ],
+      
+      userId: "",
+      name: "",
+      teacher: false,
+      avatar: "",
+      classId: "",
+      created_at: "",
+      updated_at: ""
+    }
   }
 }
 

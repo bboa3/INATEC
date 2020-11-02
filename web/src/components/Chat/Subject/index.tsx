@@ -1,12 +1,11 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
-
-import womanChef from '../../../assets/images/woman-chef.svg';
 import { Container, Profile } from './styles';
 
 interface Props {
   subjectCreatorName: string;
   subjectCreatorType: string;
+  subjectCreatorAvatar: string;
   CommentsNumber: number;
   title: string;
   SubjectDescription: string;
@@ -14,12 +13,21 @@ interface Props {
   date: string;
 }
 
-const Subject: React.FC<Props> = ({subjectCreatorName, subjectCreatorType, CommentsNumber, title, SubjectDescription, Module, date}) => {
+const Subject: React.FC<Props> = ({
+  subjectCreatorName, 
+  subjectCreatorType,
+  subjectCreatorAvatar,
+  CommentsNumber, 
+  title, 
+  SubjectDescription, 
+  Module, 
+  date
+}) => {
   return (
     <Container>
       <Profile>
         <Avatar>
-          <img src={womanChef} alt="Criador do tema"/>
+          <img src={subjectCreatorAvatar} alt="Criador do tema"/>
         </Avatar>
         <div>
           <h3>{subjectCreatorName}</h3>
@@ -41,7 +49,7 @@ const Subject: React.FC<Props> = ({subjectCreatorName, subjectCreatorType, Comme
 
       <p>
         <span>{CommentsNumber}</span>
-        Respostas
+        Comentários
       </p>
     </Container>
   )

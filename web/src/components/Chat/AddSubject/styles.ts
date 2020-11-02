@@ -88,6 +88,7 @@ export const Form = styled.form`
     margin-top: 1rem;
     
     border: none;
+    outline: 0;
     opacity: 0.9;
     
     &:hover {

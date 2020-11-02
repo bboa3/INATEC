@@ -4,14 +4,19 @@ import useLocalStorage from '../hooks/useLocalStorage';
 
 import INICIAL_STATE from '../utils/inicialState';
 
-import { User, Class, Subjects } from 'user-data';
+import { User, Class, Subject } from 'user-data';
 
 const socket = io(`${process.env.REACT_APP_API_URL}/inatec/comments`);
 
 interface Props {
-    data: {user: User, uClass: Class, subjects: Subjects[]};
+    data: {user: User, uClass: Class, subjects: Subject[], subject: Subject };
 
-  setData: React.Dispatch<React.SetStateAction<{user: User, uClass: Class, subjects: Subjects[]}>>;
+  setData: React.Dispatch<React.SetStateAction<{
+    user: User, 
+    uClass: Class, 
+    subjects: Subject[],  
+    subject: Subject
+  }>>;
   socket: SocketIOClient.Socket;
 }
 

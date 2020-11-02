@@ -95,6 +95,7 @@ export const Buttons = styled.div`
       border-radius: 0.9rem;
 
       border: none;
+      outline: 0;
       opacity: 0.9;
 
       @media (min-width: 700px) {

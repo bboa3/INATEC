@@ -34,6 +34,8 @@ export const Form = styled.form`
     border-radius: 0.9rem;
     
     border: none;
+    outline: 0;
+
     opacity: 0.9;
     
     &:hover {

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Users {
@@ -16,8 +16,8 @@ model Users {
   gender      String 
   password    String
   teacher     Boolean
-  avatar      String
-  subjets     Subject[]
+  avatar      String? 
+  subjets     Subjects[]
   class       Class? @relation(fields: [classId], references: [id])
   classId     String?
   created_at  DateTime @default(now()) 
@@ -32,10 +32,10 @@ model Class {
   year     String
   user     Users[]
   schedule Json
-  Subjects Subject[]
+  Subjects Subjects[]
 }
 
-model Subject {
+model Subjects {
   id          String   @id @default(uuid())
   titleType   String
   title       String
@@ -47,7 +47,6 @@ model Subject {
   userId      String
   name        String
   teacher     Boolean
-  avatar      String
   class       Class    @relation(fields: [classId], references: [id])
   classId     String
   created_at  DateTime @default(now()) 

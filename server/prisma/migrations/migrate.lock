@@ -1,6 +1,6 @@
 # Prisma Migrate lockfile v1
-<<<<<<< HEAD
 
-20201027195733-create-users-class-subjects
-=======
->>>>>>> 08f5073438bb31df4f69c4e6daef55539a6af44a
+20201031155443-edit-subjects
+20201101192712-subjects
+20201101233229-update-subject
+20201101235304-update-user

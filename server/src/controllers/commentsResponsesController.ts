@@ -11,7 +11,7 @@ export default {
       responseTo
     } = request.body;
 
-    const subject = await prisma.subjects.findOne({
+    const subject = await prisma.subject.findOne({
       where: {id},
       select: { comments: true }
     })
@@ -22,7 +22,7 @@ export default {
 
     commentsArray[commentIndex].responses[responseTo].likes += 1;
 
-    const subjectCommented = await prisma.subjects.update({
+    const subjectCommented = await prisma.subject.update({
       where: { id },
       data: {
         comments: commentsArray,
@@ -43,7 +43,7 @@ export default {
       commentResponse
     } = request.body;
 
-    const subject = await prisma.subjects.findOne({
+    const subject = await prisma.subject.findOne({
       where: {id},
       select: { comments: true }
     })
@@ -58,7 +58,7 @@ export default {
       commentResponse
     });
 
-    const subjectCommented = await prisma.subjects.update({
+    const subjectCommented = await prisma.subject.update({
       where: { id },
       data: {
         comments: commentsArray,
