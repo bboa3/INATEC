@@ -40,6 +40,7 @@ body {
     --title-blue: #003d44;
 
     --red: #D52B2B;
+    --error-primary: #FFBFCB;
     --text-in-primary: #505050;
 
     font-size: 60%;

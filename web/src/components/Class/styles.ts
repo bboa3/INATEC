@@ -1,27 +1,23 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  > a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    text-decoration: none;
-    color: var(--text-in-primary);
+  color: var(--text-in-primary);
 
-    background: var(--light-blue);
-    border-radius: 0.999rem;
-    margin: 0.9rem;
-    transition: background-color 0.5s;
+  background: var(--light-blue);
+  border-radius: 0.999rem;
+  margin: 0.9rem;
+  transition: background-color 0.5s;
 
-    &:hover {
-      background: var(--blue);
-    }
+  &:hover {
+    background: var(--blue);
+  }
 
-    @media (min-width: 700px) {
-      width: 70vw;
-    }
-    
+  @media (min-width: 700px) {
+    width: 70vw;
   }
 `;
 

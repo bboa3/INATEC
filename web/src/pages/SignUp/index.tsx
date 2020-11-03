@@ -51,7 +51,7 @@ const SignUp: React.FC = () => {
       setAlertMessage('As suas palavras-chaves não se correspondem ')
       setAlertStyles({
         display: 'block',
-        background: '#FFBFCB'
+        background: 'var(--error-primary)'
       })
     } else {
       api.post('/inatec/create/user', {
@@ -93,7 +93,7 @@ const SignUp: React.FC = () => {
 
           setData({...data, user: user, uClass: uClass});
 
-          history.push(`/in/class/${data.uClass.id}`);
+          history.push(`/in/class/${response.data.class.id}`);
         }
       }).catch((err) => {
         const error = HandleErrors.signUp(err.response.data.errors, err.response.data.error);
@@ -101,7 +101,7 @@ const SignUp: React.FC = () => {
 
         setAlertStyles({
           display: 'block',
-          background: '#FFBFCB'
+          background: 'var(--error-primary)'
         })
       })
     }
@@ -272,6 +272,7 @@ const SignUp: React.FC = () => {
                   list="times"
                   value={time}
                   onChange={ (e) => { setTime(e.target.value) }}
+                  required
                 />
                 <datalist id="times">
                   <option value="turma da manhã" />

@@ -1,6 +1,12 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import FormContainer from '../../components/FormContainer';
 import Input from '../../components/Input/styles';
+import Alert from '../../components/Alert';
+import { AuthContext } from '../../contexts';
+
+import api from '../../services/api';
+
 import { 
   Form, 
   Toggle,
@@ -8,16 +14,64 @@ import {
 } from './styles';
 
 const Login: React.FC = () => {
+  const { data, setData } = useContext(AuthContext);
+  const history = useHistory();
   const [ username, setUsername ] = useState('');
   const [ teacher, setTeacher ] = useState(false);
   const [ password, setPassword ] = useState('');
+  const [ alertMessage, setAlertMessage ] = useState('');
+
+  const [ alertStyles, setAlertStyles ] = useState({
+    display: 'none', 
+    background: 'var(--light-blue)'
+  });
 
   const HandleLogin = (e: FormEvent) => {
     e.preventDefault();
+
+    api.post('/inatec/login', {
+      username,
+      teacher,
+      password
+    })
+    .then(response => {
+      setAlertMessage('Você está logado');
+      setAlertStyles({
+        display: 'block',
+        background: 'var(--light-blue)'
+      })
+      
+      if(data.user.teacher === true) {
+        const user = response.data;
+        setData({...data, user: user});
+        
+        history.push(`/in/all-class`);
+      } else {
+        const user = response.data;
+        const uClass = response.data.class;
+        
+        setData({...data, user: user, uClass: uClass});
+        
+        history.push(`/in/class/${response.data.class.id}`);
+      }
+    })
+    .catch(err => {
+      setAlertMessage('Credenciais inválidas. Por favor, tente novamente.')
+
+      setAlertStyles({
+        display: 'block',
+        background: 'var(--error-primary)'
+      })
+    })
   }
 
   return (
     <>
+      <Alert 
+        styles={alertStyles}
+        message={alertMessage}
+      />
+      
       <FormContainer
         Form={
           <Form onSubmit={HandleLogin}>

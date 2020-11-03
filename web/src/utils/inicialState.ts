@@ -62,6 +62,59 @@ const INICIAL_STATE = {
         ]
       },
     },
+
+    allClass: [
+      {
+        id: "",
+        course: "",
+        time: "",
+        year: "",
+        schedule: {
+          monday: [
+            {
+              name: "",
+              discipline: "",
+              time: ""
+            }
+          ],
+          tuesday: [
+            {
+              name: "",
+              discipline: "",
+              time: ""
+            }
+          ],
+          wednesday: [
+            {
+              name: "",
+              discipline: "",
+              time: ""
+            }
+          ],
+          thursday: [
+            {
+              name: "",
+              discipline: "",
+              time: ""
+            }
+          ],
+          friday: [
+            {
+              name: "",
+              discipline: "",
+              time: ""
+            }
+          ],
+          saturday: [
+            {
+              name: "",
+              discipline: "",
+              time: ""
+            }
+          ]
+        },
+      }
+    ],
     
     subjects: [
       {

@@ -5,6 +5,7 @@ import Comment from '../../components/Chat/Comment';
 import AddSubject from '../../components/Chat/AddSubject';
 import Subject from '../../components/Chat/Subject';
 import Textarea from '../../components/Textarea';
+import Alert from '../../components/Alert';
 
 import { Container,  Main, Wrapper,} from '../../components/AppLayout/styles';
 import { Form } from './styles';
@@ -22,6 +23,12 @@ const Chats: React.FC = () => {
   const { id } = useParams<subjectsParams>();
   const [ pushDown, setPushDown ] = useState('push-up');
   const [comment, setComment] = useState('');
+  const [ alertMessage, setAlertMessage ] = useState('');
+
+  const [ alertStyles, setAlertStyles ] = useState({
+    display: 'none', 
+    background: 'var(--light-blue)'
+  });
 
   const { user, uClass, subject } = data;
 
@@ -41,24 +48,44 @@ const Chats: React.FC = () => {
 
   const HandleComment = (e: FormEvent) => {
     e.preventDefault();
-    
-    api.post('/inatec/comments', {
-      id: subject.id,
-      userId: user.id,
-      comment
-    })
-    .then(response => {
-      const subjec = response.data;
 
-      setData({...data, subject: subjec})
-    })
-    .catch(err => {
-      console.log(err.response);
-    })
+    if(!comment) {
+      setAlertMessage('Por favor, escreva o seu comentário antes de comentar.')
+
+      setAlertStyles({
+        display: 'block',
+        background: 'var(--error-primary)'
+      })
+    } else {
+      setAlertStyles({
+        display: 'none', 
+        background: 'var(--light-blue)'
+      })
+      
+      api.post('/inatec/comments', {
+        id: subject.id,
+        userId: user.id,
+        comment
+      })
+      .then(response => {
+        setComment('');
+        const subjec = response.data;
+
+        setData({...data, subject: subjec})
+      })
+      .catch(err => {
+        console.log(err.response);
+      })
+    }
   }
   
   return (
     <Container>
+      <Alert 
+        styles={alertStyles}
+        message={alertMessage}
+      />
+
       <AddSubject 
         setPushDown={setPushDown}
         pushDown={pushDown}
@@ -71,16 +98,22 @@ const Chats: React.FC = () => {
 
       <Main id={pushDown}>
         <Wrapper>
-          <Subject
-            subjectCreatorName={subject.name}
-            subjectCreatorType={subject.teacher ? 'Docente' : 'Aluno'}
-            subjectCreatorAvatar={subject.avatar}
-            title={subject.title}
-            SubjectDescription={subject.description}
-            CommentsNumber={subject.comments.length}
-            Module={subject.module}
-            date={subject.updated_at}
-          />
+          {
+            subject ? (
+              <Subject
+                subjectCreatorName={subject.name}
+                subjectCreatorType={subject.teacher ? 'Docente' : 'Aluno'}
+                subjectCreatorAvatar={subject.avatar}
+                title={subject.title}
+                SubjectDescription={subject.description}
+                CommentsNumber={subject.comments.length}
+                Module={subject.module}
+                date={subject.updated_at}
+              />
+            ) : (
+              <p>Carregando...</p>
+            )
+          }
           <Form onSubmit={HandleComment}>
             <Textarea
               name="comment" 
