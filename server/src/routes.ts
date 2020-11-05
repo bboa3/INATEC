@@ -17,10 +17,10 @@ routes.post('/inatec/get/subjects', subjectsController.index);
 routes.get('/inatec/get/subjects/:id', subjectsController.show);
 routes.post('/inatec/create/subjects', subjectsController.create);
 
-routes.put('/inatec/comments', commentsController.update);
+routes.put('/inatec/comments/like', commentsController.update);
 routes.post('/inatec/comments', commentsController.create);
 
-routes.put('/inatec/comments/responses', commentsResponsesController.update);
+routes.put('/inatec/comments/responses/like', commentsResponsesController.update);
 routes.post('/inatec/comments/responses', commentsResponsesController.create);
 
 routes.post('/inatec/login', usersController.index);

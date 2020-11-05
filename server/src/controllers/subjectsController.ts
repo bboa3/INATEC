@@ -16,7 +16,7 @@ export default {
     if(!subjects)
     return response.status(404).json({error: 'Não foi encontrado nenhuma tema'});
 
-    response.json(subjects);
+    response.json(subjectViews.renderMany(subjects));
   },
 
   async show(request: Request, response: Response) {

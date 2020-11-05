@@ -32,7 +32,7 @@ export default {
     if(!subjectCommented)
     return response.status(400).json({error: 'Erro au adicionar o comentário'});
 
-    response.json(subjectCommented);
+    response.json(subjectsViews.render(subjectCommented));
   },
 
   async create(request: Request, response: Response) {
@@ -49,10 +49,23 @@ export default {
     if(!subject)
     return response.status(400).json({error: 'Problemas para encontrar o tema que pretende comentar'});
 
+    const user = await prisma.users.findOne({
+      where: {id: userId},
+      select: {
+        name: true,
+        teacher: true,
+        avatar: true
+      }
+    })
+    if(!user)
+    return response.status(400).json({error: 'Problemas para encontrar usuários'});
+
     const commentsArray = subject.comments as any
 
     commentsArray.unshift({
-      userId,
+      name: user.name,
+      teacher: user.teacher,
+      avatar: user.avatar,
       comment, 
       commented_at: new Date, 
       responses: [],
