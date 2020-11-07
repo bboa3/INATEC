@@ -25,9 +25,8 @@ const Comment: React.FC = () => {
   const { subject, user } = data;
   const { comments } = subject;
   const [ commentResponse, setCommentResponse ] = useState('')
-  const [ styleButton, setStyleButton ] = useState('block')
   const [ responseInput, setResponseInput ] = useState<string>('closed')
-  const [ textareaIndex, setTextareaIndex ] = useState<number>(-1)
+  const [ formIndex, setFormIndex ] = useState<number>(-1)
   const [ commentIndex, setCommentIndex ] = useState<number>()
   const [ alertMessage, setAlertMessage ] = useState('');
 
@@ -36,14 +35,13 @@ const Comment: React.FC = () => {
     background: 'var(--light-blue)'
   });
 
-  const openTextarea = (textareaIndex: number) => {
-    setResponseInput(`open-textarea${textareaIndex}`)
-    setTextareaIndex(textareaIndex)
-    setStyleButton('none')
+  const openForm = (formIndex: number) => {
+    setResponseInput(`open-form${formIndex}`)
+    setFormIndex(formIndex)
   }
-  const closeTextarea = () => {
+  
+  const closeForm = () => {
     setResponseInput('closed')
-    setStyleButton('block')
   }
 
   const setCommentLike = async (commentIndex: number) => {
@@ -106,7 +104,7 @@ const Comment: React.FC = () => {
                 message={alertMessage}
               />
 
-              <CommentBlock textareaIndex={textareaIndex}>
+              <CommentBlock formIndex={formIndex}>
                 <Commenter>
                   <Avatar>
                     <img src={`${process.env.REACT_APP_UPLOAD_URL}/${comment.avatar}`} alt="Profile"/>
@@ -119,7 +117,7 @@ const Comment: React.FC = () => {
                 <p>
                   {comment.comment}
                 </p>
-                <CommentFooter>
+                <CommentFooter formIndex={formIndex}>
                   <div>
                     <AccessTimeIcon />
                     <span>{moment(comment.commented_at)}</span>
@@ -129,12 +127,12 @@ const Comment: React.FC = () => {
                       {comment.likes} Likes
                     </LikeButton>
                     <ResponseButton 
-                      style={{display: `${styleButton}`}}
+                      id={`button${commentIndex}`}
                       onClick={e => {
                         responseInput === 'closed'? (
-                          openTextarea(commentIndex)
+                          openForm(commentIndex)
                         ) : (
-                          closeTextarea()
+                          closeForm()
                         )
                       }}
                     >
@@ -143,18 +141,20 @@ const Comment: React.FC = () => {
                   </div>
                 </CommentFooter>
 
-                <form onSubmit={HandleResponse}>
+                <form
+                  id={`open-form${commentIndex}`}
+                  onSubmit={HandleResponse}
+                >
                   <textarea
-                    id={`open-textarea${commentIndex}`}
                     name="response"
                     value={commentResponse}
                     onChange={e => { setCommentResponse(e.target.value)}}
                   />
                   <ResponseButton 
                     style={{
-                      display: `${styleButton === 'none' ? 'block' : 'none'}`,
+                      // display: `${styleButton === 'none' ? 'block' : 'none'}`,
                       position: 'absolute',
-                      marginTop: '0.7rem',
+                      marginTop: '7.9rem',
                       right: '0.4rem'
                     }}
                     type='submit'
