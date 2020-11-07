@@ -33,6 +33,7 @@ export const Main = styled.main`
   border-top-right-radius: 2.3rem;
 
   position: absolute;
+  padding-bottom: 5rem;
 
   @media (min-width: 700px) {
     display: flex;

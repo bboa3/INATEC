@@ -1,6 +1,7 @@
 import React from 'react';
 import { createContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import io from 'socket.io-client';
 
 import INICIAL_STATE from '../utils/inicialState';
 
@@ -41,4 +42,3 @@ const AuthProvider: React.FC = ({children}) => {
 }
 
 export default AuthProvider;
-

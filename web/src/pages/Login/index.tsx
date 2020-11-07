@@ -56,7 +56,7 @@ const Login: React.FC = () => {
       }
     })
     .catch(err => {
-      setAlertMessage('Credenciais inválidas. Por favor, tente novamente.')
+      setAlertMessage(err.response.data.error)
 
       setAlertStyles({
         display: 'block',

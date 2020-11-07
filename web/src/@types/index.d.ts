@@ -52,15 +52,20 @@ declare module 'user-data' {
     updated_at: string;
     
     comments: {
+      name: string,
+      teacher: boolean,
+      avatar: string,
       likes: number;
-      userId: string;
       comment: string;
       commented_at: string;
 
       responses: {
         likes: number;
-        userId: string;
+        name: string,
+        teacher: boolean,
+        avatar: string,
         commentResponse: string;
+        responded_at: string;
       }[];
     }[];
   }

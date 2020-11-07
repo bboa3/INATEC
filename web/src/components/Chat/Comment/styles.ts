@@ -2,19 +2,54 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: var(--light-blue);
-  padding: 0.5rem .8rem;
+  padding: 0.5rem .8rem 4rem;
 
   border-radius: 0.999rem;
 
   @media (min-width: 700px) {
-    padding: 0.8rem 1.2rem;
+    padding: 0.8rem 1.2rem 4rem;
   }
 `;
 
-export const CommentBlock = styled.div`
+interface Props {
+  textareaIndex: number;
+}
+
+export const CommentBlock = styled.div<Props>`
+ > form {
+  position: relative;
+
+  > textarea {
+    display: none;
+  }
+
+  > ${Props => '#open-textarea' + Props.textareaIndex} {
+    display: block;
+  }
+  
   > p {
     margin-left: 5rem;
   }
+
+  & + & {
+    margin-top: 2rem;
+  }
+
+  > textarea {
+    width: 100%;
+    height: 6rem;
+    min-width: 8rem;
+    margin-top: 0.8rem;
+    border-radius: 0.8rem;
+    background-color: transparent;
+    border: 1px solid var(--blue);
+    color: var(--text-in-primary);
+    outline: 0;
+    resize: vertical;
+    padding: 1.2rem 1.6rem;
+    font: 1.6rem Archivo;
+  } 
+ }
 `;
 
 export const Commenter = styled.div`
@@ -124,5 +159,42 @@ export const ReplyFooter = styled.div`
 
   @media (min-width: 700px) {
     margin: 0 2rem;
+  }
+`;
+
+export const LikeButton  = styled.button`
+  background: transparent;
+  margin-right: 0.8rem;
+  color: var(--red);
+  
+  font-family: Archivo;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+  
+  border: none;
+  outline: 0;
+  opacity: 0.9;
+  
+  &:hover {
+    color: var(--blue);
+  }
+`;
+
+export const ResponseButton = styled.button`
+  background: transparent;
+  margin-right: 0.8rem;
+  color: var(--blue-green);
+  
+  font-family: Archivo;
+  font-weight: bold;
+  cursor: pointer;
+  
+  border: none;
+  outline: 0;
+  opacity: 0.9;
+  
+  &:hover {
+    color: var(--blue);
   }
 `;

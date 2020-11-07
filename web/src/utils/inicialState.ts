@@ -126,20 +126,25 @@ const INICIAL_STATE = {
         description: "",
         
         comments: [
-          {
-            likes: 0,
-            userId: "",
-            comment: "",
-            commented_at: "",
-            responses: [
-              {
-                likes: 0,
-                userId: "",
-                commentResponse: "",
-              }
-            ]
-          }
-        ],
+        {
+          likes: 0,
+          name: "",
+          teacher: false,
+          avatar: "",
+          comment: "",
+          commented_at: "",
+          responses: [
+            {
+              likes: 0,
+              name: "",
+              teacher: false,
+              avatar: "",
+              commentResponse: "",
+              responded_at: ""
+            }
+          ]
+        }
+      ],
 
         userId: "",
         name: "",
@@ -162,14 +167,19 @@ const INICIAL_STATE = {
       comments: [
         {
           likes: 0,
-          userId: "",
+          name: "",
+          teacher: false,
+          avatar: "",
           comment: "",
           commented_at: "",
           responses: [
             {
               likes: 0,
-              userId: "",
+              name: "",
+              teacher: false,
+              avatar: "",
               commentResponse: "",
+              responded_at: ""
             }
           ]
         }

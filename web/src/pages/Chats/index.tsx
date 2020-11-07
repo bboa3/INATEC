@@ -11,6 +11,7 @@ import { Container,  Main, Wrapper,} from '../../components/AppLayout/styles';
 import { Form } from './styles';
 import { AuthContext } from '../../contexts';
 import api from '../../services/api';
+import moment from '../../utils/moment';
 
 interface subjectsParams {
   id: string;
@@ -108,7 +109,7 @@ const Chats: React.FC = () => {
                 SubjectDescription={subject.description}
                 CommentsNumber={subject.comments.length}
                 Module={subject.module}
-                date={subject.updated_at}
+                date={moment(subject.updated_at)}
               />
             ) : (
               <p>Carregando...</p>
