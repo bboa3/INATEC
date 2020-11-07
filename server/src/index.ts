@@ -24,9 +24,9 @@ app.use('/uploads/pdf', express.static(path.join(__dirname, '..', 'uploads', 'pd
 app.use(errorHandler);
 
 io.on('connection', socket => {
-  console.log(`socket conectado: ${socket.id}`);
+  
 
-  socket.on('newSubject', data => {
+  socket.on('responseLike', data => {
     console.log(data);
   });
 
