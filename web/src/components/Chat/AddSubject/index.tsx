@@ -67,12 +67,6 @@ const AddSubject: React.FC<Props> = ({
 
       setData({...data, subjects: subjects })
     })
-
-    // socket.emit('newSubject', {
-    // });
-    // socket.on('getSubjects', (subjects: Subjects) => {
-    //   console.log(subjects);
-    // })
   }
 
   return (

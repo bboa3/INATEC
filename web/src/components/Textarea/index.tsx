@@ -6,10 +6,6 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     name: string
 }
 
-interface Props {
-    width: string
-}
-
 const Textarea: React.FC<TextareaProps> = ({label, name, ...rest}) => {
     return (
         <Container>

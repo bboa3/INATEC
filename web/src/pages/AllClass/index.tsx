@@ -44,7 +44,7 @@ const AllClass: React.FC = () => {
      <Main>
         {
           
-          data.allClass ? (
+          data.allClass && (
             data.allClass.map(clas => (
               <Link key={clas.id} to={`/in/class/${clas.id}`}>
                 <Class
@@ -55,9 +55,11 @@ const AllClass: React.FC = () => {
                 />
               </Link>
             ))
-           ) : (
-            <p>Carregando...</p>
           )
+        }
+
+        {
+          !data.allClass && <p>Carregando...</p>
         }
      </Main>
     </Container>

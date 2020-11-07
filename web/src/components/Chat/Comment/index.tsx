@@ -25,7 +25,6 @@ const Comment: React.FC = () => {
   const { subject, user } = data;
   const { comments } = subject;
   const [ commentResponse, setCommentResponse ] = useState('')
-  const [ responseInput, setResponseInput ] = useState<string>('closed')
   const [ formIndex, setFormIndex ] = useState<number>(-1)
   const [ commentIndex, setCommentIndex ] = useState<number>()
   const [ alertMessage, setAlertMessage ] = useState('');
@@ -36,13 +35,10 @@ const Comment: React.FC = () => {
   });
 
   const openForm = (formIndex: number) => {
-    setResponseInput(`open-form${formIndex}`)
     setFormIndex(formIndex)
   }
   
-  const closeForm = () => {
-    setResponseInput('closed')
-  }
+
 
   const setCommentLike = async (commentIndex: number) => {
     const response = await api.put('/inatec/comments/like', {
@@ -129,11 +125,7 @@ const Comment: React.FC = () => {
                     <ResponseButton 
                       id={`button${commentIndex}`}
                       onClick={e => {
-                        responseInput === 'closed'? (
-                          openForm(commentIndex)
-                        ) : (
-                          closeForm()
-                        )
+                        openForm(commentIndex)
                       }}
                     >
                       Responder
@@ -152,7 +144,6 @@ const Comment: React.FC = () => {
                   />
                   <ResponseButton 
                     style={{
-                      // display: `${styleButton === 'none' ? 'block' : 'none'}`,
                       position: 'absolute',
                       marginTop: '7.9rem',
                       right: '0.4rem'
