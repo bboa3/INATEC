@@ -7,8 +7,8 @@ export default {
       titleType: subject.titleType,
       title: subject.title,
       module: subject.module,
-      pdf: subject.pdf,
       description: subject.description,
+      toDownload: subject.toDownload,
 
       userId: subject.userId,
       name: subject.name,

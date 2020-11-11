@@ -10,6 +10,7 @@
     "prod": "tsc && node ./dist/index.js",
     "migration:save": "prisma migrate save --experimental",
     "migration:up": "prisma migrate up --experimental",
+    "migration:revert": "prisma migrate down 1 --experimental",
     "build": "npx prisma generate"
   },
   "dependencies": {

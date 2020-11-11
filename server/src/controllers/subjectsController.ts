@@ -38,33 +38,34 @@ export default {
       titleType,
       title,
       module,
-      pdf,
       description,
       classId
     } = request.body;
 
     const user = await prisma.users.findOne({
-      where: { username },
+      where: {username: username},
       select: {
         name: true,
         teacher: true,
         avatar: true
       }
     })
+
     if(!user)
-    return response.status(404).json({error: 'Desculpa os seus dados não existem no sistema'});
+    return response.status(404).json({error: 'Os seus dados não existem no sistema'});
 
     await prisma.subject.create({
       data: {
-        titleType,
-        title,
-        module,
-        pdf,
-        description,
+        titleType: titleType,
+        title: title,
+        module: module,
+        description: description,
         comments: [],
         name: user.name,
         teacher: user.teacher,
         avatar: user.avatar,
+        pdf: request.file ? request.file.filename : undefined,
+        toDownload: request.file ? true : false,
         class: {
           connect: {
             id: classId
@@ -73,7 +74,7 @@ export default {
         user: {
           connect: {
             username
-          }
+          } 
         }
       }
     })

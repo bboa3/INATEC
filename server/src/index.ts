@@ -12,8 +12,6 @@ import dotenvExpand from 'dotenv-expand';
 dotenvExpand(config());
 
 const app = express();
-const server = http.createServer(app)
-const io = socket(server);
 
 app.use(cors());
 app.use(express.json());
@@ -23,14 +21,4 @@ app.use('/uploads/images', express.static(path.join(__dirname, '..', 'uploads', 
 app.use('/uploads/pdf', express.static(path.join(__dirname, '..', 'uploads', 'pdf')));
 app.use(errorHandler);
 
-io.on('connection', socket => {
-  
-
-  socket.on('responseLike', data => {
-    console.log(data);
-  });
-
-  socket.broadcast.emit('getSubjects', {subject: 'Subjects booom'});
-})
-
-server.listen(process.env.PORT || 3002);
+app.listen(process.env.PORT || 3002);

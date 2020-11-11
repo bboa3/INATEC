@@ -6,19 +6,23 @@ import classController from './controllers/classController';
 import subjectsController from './controllers/subjectsController';
 import commentsController from './controllers/commentsController';
 import commentsResponsesController from './controllers/commentsResponsesController';
+import downloadController from './controllers/downloadController';
 
 import avatarUploadConfig from './config/avatar';
-
+import pdfUploadConfig from './config/pdf';
 
 const routes = Router();
 const avatarUpload = multer(avatarUploadConfig);
+const pdfUpload = multer(pdfUploadConfig);
 
 routes.post('/inatec/get/subjects', subjectsController.index);
 routes.get('/inatec/get/subjects/:id', subjectsController.show);
-routes.post('/inatec/create/subjects', subjectsController.create);
+routes.post('/inatec/create/subjects', pdfUpload.single('pdf'), subjectsController.create);
+routes.get('/inatec/subjects/download/:id', downloadController.index);
 
 routes.put('/inatec/comments/like', commentsController.update);
 routes.post('/inatec/comments', commentsController.create);
+
 
 routes.put('/inatec/comments/responses/like', commentsResponsesController.update);
 routes.post('/inatec/comments/responses', commentsResponsesController.create);

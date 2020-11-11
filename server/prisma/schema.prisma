@@ -41,6 +41,7 @@ model Subject {
   title       String
   module      String
   pdf         String?
+  toDownload  String
   description String 
   comments    Json?
   user        Users    @relation(fields: [userId], references: [id])
