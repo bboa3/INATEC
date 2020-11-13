@@ -5,6 +5,7 @@ import Input from '../../components/Input/styles';
 import Alert from '../../components/Alert';
 import { AuthContext } from '../../contexts';
 
+import HandleErrors from '../../errors/handler';
 import api from '../../services/api';
 
 import { 
@@ -35,12 +36,6 @@ const Login: React.FC = () => {
       password
     })
     .then(response => {
-      setAlertMessage('Você está logado');
-      setAlertStyles({
-        display: 'block',
-        background: 'var(--light-blue)'
-      })
-      
       if(data.user.teacher === true) {
         const user = response.data;
         setData({...data, user: user});
@@ -56,12 +51,14 @@ const Login: React.FC = () => {
       }
     })
     .catch(err => {
-      setAlertMessage(err.response.data.error)
-
-      setAlertStyles({
-        display: 'block',
-        background: 'var(--error-primary)'
-      })
+      if(err.response) {
+        const error = HandleErrors.render(err.response.data);
+        setAlertMessage(error);
+        setAlertStyles({
+          display: 'block',
+          background: 'var(--error-primary)'
+        })
+      }
     })
   }
 

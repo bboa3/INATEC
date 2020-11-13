@@ -36,9 +36,9 @@ export const Container = styled.div`
         font-size: 1.3rem;
       }
 
-      > button {
-        width: 20rem;
-        height: 3.3rem;
+      > a {
+        text-decoration: none;
+        padding: 0.6rem 1.4rem;
         background: var(--blue-green);
         
         color: var(--white);
@@ -56,6 +56,12 @@ export const Container = styled.div`
           opacity: 1;
           color: var(--light-blue);
         }
+      }
+
+      > strong {
+        font-family: Archivo;
+        color: var(--blue-green);
+        font-size: 1.9rem;
       }
     }
   }

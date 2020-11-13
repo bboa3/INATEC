@@ -95,6 +95,7 @@ const Chats: React.FC = () => {
         course={uClass.course}
         year={uClass.year}
         time={uClass.time}
+        disciplines={uClass.disciplines}
       />
 
       <Main id={pushDown}>

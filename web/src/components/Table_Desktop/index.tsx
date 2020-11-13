@@ -1,116 +1,274 @@
+
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts';
 import { Table } from './styles';
 
 const TableDesktop: React.FC = () => {
   const { schedule } = useContext(AuthContext).data.uClass;
+  const TeacherProps = [
+    {
+      name: '',
+      discipline: ''
+    }
+  ]
+
+  let mondayTeachers: typeof TeacherProps= [];
+  let tuesdayTeachers: typeof TeacherProps= [];
+  let wednesdayTeachers: typeof TeacherProps = [];
+  let thursdayTeachers: typeof TeacherProps = [];
+  let fridayTeachers: typeof TeacherProps = [];
+
+
+  const { monday, tuesday, wednesday, thursday, friday, saturday } = schedule;
+  monday.map(teacher => (
+    teacher.time.split(",").map(() => (
+      mondayTeachers.push({
+        name: teacher.name,
+        discipline: teacher.discipline
+      })
+    ))
+  ))
+
+  tuesday.map(teacher => (
+    teacher.time.split(",").map(() => (
+      tuesdayTeachers.push({
+        name: teacher.name, 
+        discipline: teacher.discipline
+      })
+    ))
+  ))
+
+  wednesday.map(teacher => (
+    teacher.time.split(",").map(() => (
+      wednesdayTeachers.push({
+        name: teacher.name, 
+        discipline: teacher.discipline
+      })
+    ))
+  ))
+
+  thursday.map(teacher => (
+    teacher.time.split(",").map(() => (
+      thursdayTeachers.push({
+        name: teacher.name, 
+        discipline: teacher.discipline
+      })
+    ))
+  ))
+
+  friday.map(teacher => (
+    teacher.time.split(",").map(() => (
+      fridayTeachers.push({
+        name: teacher.name, 
+        discipline: teacher.discipline
+      })
+    ))
+  ))
   
   return (
     <Table>
-      <thead>
-        <tr>
-          <th rowSpan={2}>Horas</th>
-          <th colSpan={2}>2ª feira</th>
-          <th  colSpan={2}>3ª feira</th>
-          <th  colSpan={2}>4ª feira</th>
-          <th  colSpan={2}>5ª feira</th>
-          <th  colSpan={2}>6ª feira</th>
-        </tr>
-        <tr>
-          <th>Disciplina</th>
-          <th>Docente</th>
-          <th>Disciplina</th>
-          <th>Docente</th>
-          <th>Disciplina</th>
-          <th>Docente</th>
-          <th>Disciplina</th>
-          <th>Docente</th>
-          <th>Disciplina</th>
-          <th>Docente</th>
-        </tr>
-      </thead>
+      {
+        schedule && (
+          <tbody>
+            <td className="table-hours">
+              <tr>
+                <td className="content"></td>
+              </tr>
+              <tr>
+                <td className="content"></td>
+              </tr>
+              
+              <th className="content">Horas</th>
+              <tr>
+                <td className="content">07:00 - 07:45</td>
+              </tr>
+              <tr>
+                <td className="content">07:45 - 08:30</td>
+              </tr>
+              <tr>
+                <td className="content">08:40 - 09:25</td>
+              </tr>
+              <tr>
+                <td className="content">09:25 - 10:10</td>
+              </tr>
+              <tr>
+                <td className="content">10:20 - 11:05</td>
+              </tr>
+              <tr>
+                <td className="content">11:05 - 11:55</td>
+              </tr>
+            </td>
 
-      <tbody>
-        <tr>
-          <td>07:00 - 07:45</td>
-          <td>HST</td>
-          <td>Telma</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>RPESVPC</td>
-          <td>Paunde</td>
-          <td>UUSSPP</td>
-          <td>Garcias</td>
-        </tr>
-        <tr>
-          <td>07:45 - 08:30</td>
-          <td>HST</td>
-          <td>Telma</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>RPESVPC</td>
-          <td>Paunde</td>
-          <td>UUSSPP</td>
-          <td>Garcias</td>
-        </tr>
-        <tr>
-          <td>08:40 - 09:25</td>
-          <td>HST</td>
-          <td>Telma</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>ATFEA</td>
-          <td>Hélio</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-        </tr>
-        <tr>
-          <td>09:25 - 10:10</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>ATFEA</td>
-          <td>Hélio</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-        </tr>
-        <tr>
-          <td>10:20 - 11:05</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>IPEEOCIF</td>
-          <td>Matsinhe</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>ATFEA</td>
-          <td>Hélio</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-        </tr>
-        <tr>
-          <td>11:05 - 11:55</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>IPEEOCIF</td>
-          <td>Matsinhe</td>
-          <td>CCCR</td>
-          <td>Chilundo</td>
-          <td>ATFEA</td>
-          <td>Hélio</td>
-          <td>AFECC</td>
-          <td>Simbine</td>
-        </tr>
-      </tbody>
-    </Table>
+            {
+              mondayTeachers && (
+                <td>
+                  <th colSpan={2}>2ª feira</th>
+                  <tr>
+                    <td>
+                      <tr>
+                        <td className="content header">Disciplina</td>
+                      </tr>
+                      {
+                        mondayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.discipline}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                    <td>
+                      <tr>
+                        <td className="content header">Docente</td>
+                      </tr>
+                      {
+                        mondayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.name}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                  </tr>
+                </td>
+              )
+            }
+
+            {
+              tuesdayTeachers && (
+                <td>
+                  <th colSpan={2}>3ª feira</th>
+                  <tr>
+                    <td>
+                      <tr>
+                        <td className="content header">Disciplina</td>
+                      </tr>
+                      {
+                        tuesdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.discipline}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                    <td>
+                      <tr>
+                        <td className="content header">Docente</td>
+                      </tr>
+                      {
+                        tuesdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.name}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                  </tr>
+                </td>
+              )
+            }
+            {
+              wednesdayTeachers && (
+                <td>
+                  <th colSpan={2}>4ª feira</th>
+                  <tr>
+                    <td>
+                      <tr>
+                        <td className="content header">Disciplina</td>
+                      </tr>
+                      {
+                        wednesdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.discipline}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                    <td>
+                      <tr>
+                        <td className="content header">Docente</td>
+                      </tr>
+                      {
+                        wednesdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.name}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                  </tr>
+                </td>
+              )
+            }
+            {
+              thursdayTeachers && (
+                <td>
+                  <th colSpan={2}>5ª feira</th>
+                  <tr>
+                    <td>
+                      <tr>
+                        <td className="content header">Disciplina</td>
+                      </tr>
+                      {
+                        thursdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.discipline}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                    <td>
+                      <tr>
+                        <td className="content header">Docente</td>
+                      </tr>
+                      {
+                        thursdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.name}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                  </tr>
+                </td>
+              )
+            }
+            {
+              fridayTeachers && (
+                <td>
+                  <th colSpan={2}>6ª feira</th>
+                  <tr>
+                    <td>
+                      <tr>
+                        <td className="content header">Disciplina</td>
+                      </tr>
+                      {
+                        fridayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.discipline}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                    <td>
+                      <tr>
+                        <td className="content header">Docente</td>
+                      </tr>
+                      {
+                        fridayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.name}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                  </tr>
+                </td>
+              )
+            }
+          </tbody>
+        )
+      }
+    </Table>  
   )
 }
 

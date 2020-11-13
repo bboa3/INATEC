@@ -7,7 +7,7 @@ import INICIAL_STATE from '../utils/inicialState';
 
 import { User, Class, Subject } from 'user-data';
 
-const socket = io(`${process.env.REACT_APP_API_URL}/inatec/comments`);
+// const socket = io(`${process.env.REACT_APP_API_URL}/inatec/comments`);
 
 interface Props {
     data: {
@@ -25,7 +25,7 @@ interface Props {
     subject: Subject,
     allClass: Class[]
   }>>;
-  socket: SocketIOClient.Socket;
+  // socket: SocketIOClient.Socket;
 }
 
 export const AuthContext =  createContext<Props>({} as Props);
@@ -35,10 +35,10 @@ const AuthProvider: React.FC = ({children}) => {
   const [ data, setData ] = useLocalStorage('INATEC', INICIAL_STATE.data);
 
   return (
-    <AuthContext.Provider value={{ socket, data, setData }}>
+    <AuthContext.Provider value={{ data, setData }}>
       {children}
     </AuthContext.Provider>
-  )
+  ) 
 }
 
 export default AuthProvider;

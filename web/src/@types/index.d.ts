@@ -25,6 +25,7 @@ declare module 'user-data' {
     course: string;
     time: string
     year: string;
+    disciplines: string;
     schedule: {
       monday: Teachers;
       tuesday: Teachers;
@@ -40,8 +41,8 @@ declare module 'user-data' {
     titleType: string;
     title: string;
     module: string;
-    pdf: string;
     description: string;
+    toDownload: boolean;
 
     userId: string;
     name: string;
@@ -50,22 +51,23 @@ declare module 'user-data' {
     classId: string;
     created_at: string;
     updated_at: string;
+    subjectsCreatedNumber: number;
     
     comments: {
-      name: string,
-      teacher: boolean,
-      avatar: string,
-      likes: number;
-      comment: string;
-      commented_at: string;
+      name: string
+      teacher: boolean
+      avatar: string
+      likes: number
+      comment: string
+      commented_at: string
 
       responses: {
-        likes: number;
-        name: string,
-        teacher: boolean,
-        avatar: string,
-        commentResponse: string;
-        responded_at: string;
+        likes: number
+        name: string
+        teacher: boolean
+        avatar: string
+        commentResponse: string
+        responded_at: string
       }[];
     }[];
   }

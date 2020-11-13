@@ -8,7 +8,7 @@ const INICIAL_STATE = {
       phone: "",
       gender: "",
       avatar: "",
-      teacher: false,
+      teacher: false, 
       created_at: "",
       updated_at: "",
     },
@@ -17,6 +17,7 @@ const INICIAL_STATE = {
       course: "",
       time: "",
       year: "",
+      disciplines: "",
       schedule: {
         monday: [
           {
@@ -69,6 +70,7 @@ const INICIAL_STATE = {
         course: "",
         time: "",
         year: "",
+        disciplines: "",
         schedule: {
           monday: [
             {
@@ -122,8 +124,9 @@ const INICIAL_STATE = {
         titleType: "",
         title: "",
         module: "",
-        pdf: "",
-        description: "",
+        description: "", 
+        toDownload: false,
+        subjectsCreatedNumber: 0,
         
         comments: [
         {
@@ -161,8 +164,9 @@ const INICIAL_STATE = {
       titleType: "",
       title: "",
       module: "",
-      pdf: "",
       description: "",
+      toDownload: false,
+      subjectsCreatedNumber: 0,
       
       comments: [
         {

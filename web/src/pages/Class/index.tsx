@@ -67,6 +67,7 @@ const Class: React.FC = () => {
               course={uClass.course}
               year={uClass.year}
               time={uClass.time}
+              disciplines={uClass.disciplines}
             />
 
             <Main id={pushDown}>
@@ -79,7 +80,7 @@ const Class: React.FC = () => {
                         <SubjectHeader>
                           <img src={roadToKnowledgeImg} alt="Caminho para o conhecimento"/>
                           <div>
-                            <h3> {data.subjects.length} Trabalhos e temas debatidos</h3>
+                            <h3> {data.subjects[0].subjectsCreatedNumber} Trabalhos e temas debatidos</h3>
                           </div>
                         </SubjectHeader>
 

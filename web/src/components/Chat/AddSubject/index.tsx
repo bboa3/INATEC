@@ -21,8 +21,9 @@ interface Props {
   username: string;
   avatar: string;
   course: string;
-  time: string
+  time: string;
   year: string;
+  disciplines: string;
 }
 
 const AddSubject: React.FC<Props> = ({
@@ -32,12 +33,13 @@ const AddSubject: React.FC<Props> = ({
   avatar, 
   course, 
   time, 
-  year
+  year,
+  disciplines
 }) => {
   const { data, setData } = useContext(AuthContext);
   const [ title, setTitle ] = useState('');
   const [ module, setModule ] = useState('');
-  const [ pdf, setPdf ] = useState('');
+  const [ pdf, setPdf ] = useState<File>();
   const [ titleType, setTitleType ] = useState('');
   const [ description, setDescription ] = useState('');
 
@@ -47,20 +49,24 @@ const AddSubject: React.FC<Props> = ({
     const { username } = data.user;
     const classId = data.uClass.id;
 
-    api.post('/inatec/create/subjects', {
-      classId,
-      username,
-      titleType,
-      title,
-      module,
-      pdf,
-      description
-    })
+    const formData = new FormData();
+
+    formData.append('classId', classId);
+    formData.append('username', username);
+    formData.append('titleType', titleType);
+    formData.append('title', title);
+    formData.append('module', module);
+    formData.append('description', description);
+
+    if(pdf) {
+      formData.append('pdf', pdf);
+    }
+
+    api.post('/inatec/create/subjects', formData)
     .then(response => {
       setTitleType('');
       setTitle('');
       setModule('');
-      setPdf('');
       setDescription('');
 
       const subjects = response.data;
@@ -108,9 +114,11 @@ const AddSubject: React.FC<Props> = ({
               />
               <datalist id="subjectTips">
                 <option value="Nova ficha" />
-                <option value="Pergunta" />
+                <option value="Aviso de um atraso" />
+                <option value="Pergunta ao docente" />
+                <option value="Pergunta aos colegas" />
                 <option value="Resposta" />
-                <option value="Sugestão de um tema" />
+                <option value="Sugestão de tema" />
               </datalist>
             </div>
             
@@ -132,7 +140,11 @@ const AddSubject: React.FC<Props> = ({
                 required
               />
               <datalist id="modules">
-                <option value="CCR" />
+                {
+                  disciplines.split(",").map(discipline => (
+                    <option value={discipline} />
+                  ))
+                }
               </datalist>
             </div>
           </div>
@@ -145,8 +157,12 @@ const AddSubject: React.FC<Props> = ({
                 name="file"
                 type="file"
                 placeholder="pdf"
-                value={pdf}
-                onChange={ (e) => { setPdf(e.target.value) }}
+                onChange={e => {
+                  if(!e.target.files)
+                  return
+
+                  setPdf(e.target.files[0])
+                }}
               />
             </div>
 

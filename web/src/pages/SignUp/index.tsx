@@ -29,6 +29,7 @@ const SignUp: React.FC = () => {
   const [ year, setYear ] = useState('');
   const [ teacher, setTeacher ] = useState(false);
   const [ classInfo, setClassInfo ] = useState({display: 'block'});
+  const [ studentInfoRequired, setStudentInfoRequired ] = useState(true);
 
   const [ alertMessage, setAlertMessage ] = useState('');
 
@@ -38,10 +39,13 @@ const SignUp: React.FC = () => {
   });
 
   useEffect( () => {
-    if(teacher === true)
-    return setClassInfo({display: 'none'});
-
-    setClassInfo({display: 'block'});
+    if(teacher === true) {
+      setClassInfo({display: 'none'});
+      setStudentInfoRequired(false);
+    } else {
+      setStudentInfoRequired(true);
+      setClassInfo({display: 'block'});
+    } 
   }, [teacher])
 
   const HandleSignUp = (e: FormEvent) => {
@@ -82,21 +86,21 @@ const SignUp: React.FC = () => {
           background: 'var(--light-blue)'
         })
 
-        if(data.user.teacher === true) {
-          const user = response.data;
-          setData({...data, user: user});
-
-          history.push(`/in/all-class`);
-        } else {
+        if(!data.user.teacher === true) {
           const user = response.data;
           const uClass = response.data.class;
 
           setData({...data, user: user, uClass: uClass});
 
           history.push(`/in/class/${response.data.class.id}`);
+        } else {
+          const user = response.data;
+          setData({...data, user: user});
+
+          history.push(`/in/all-class`);
         }
       }).catch((err) => {
-        const error = HandleErrors.signUp(err.response.data.errors, err.response.data.error);
+        const error = HandleErrors.render(err.response.data);
         setAlertMessage(error);
 
         setAlertStyles({
@@ -229,7 +233,7 @@ const SignUp: React.FC = () => {
                   list="courses"
                   value={course}
                   onChange={ (e) => { setCourse(e.target.value) }}
-                  required
+                  required={studentInfoRequired}
                 />
                 <datalist id="courses">
                   <option value="Contabilidade" />
@@ -255,7 +259,7 @@ const SignUp: React.FC = () => {
                   list="years"
                   value={year}
                   onChange={ (e) => { setYear(e.target.value) }}
-                  required
+                  required={studentInfoRequired}
                 />
                 <datalist id="years">
                   <option value="1º ano" />
@@ -272,7 +276,7 @@ const SignUp: React.FC = () => {
                   list="times"
                   value={time}
                   onChange={ (e) => { setTime(e.target.value) }}
-                  required
+                  required={studentInfoRequired}
                 />
                 <datalist id="times">
                   <option value="turma da manhã" />

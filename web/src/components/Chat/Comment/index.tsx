@@ -38,8 +38,6 @@ const Comment: React.FC = () => {
     setFormIndex(formIndex)
   }
   
-
-
   const setCommentLike = async (commentIndex: number) => {
     const response = await api.put('/inatec/comments/like', {
       id: subject.id,
@@ -91,19 +89,17 @@ const Comment: React.FC = () => {
 
   return (
     <>
-      {
+    <Alert 
+      styles={alertStyles}
+      message={alertMessage}
+    />      {
         comments && (
           comments.map((comment, commentIndex) => (
             <Container key={commentIndex}>
-              <Alert 
-                styles={alertStyles}
-                message={alertMessage}
-              />
-
               <CommentBlock formIndex={formIndex}>
                 <Commenter>
                   <Avatar>
-                    <img src={`${process.env.REACT_APP_UPLOAD_URL}/${comment.avatar}`} alt="Profile"/>
+                    <img src={`${process.env.REACT_APP_UPLOAD_Images_URL}/${comment.avatar}`} alt="Profile"/>
                   </Avatar>
                   <div>
                     <p>{comment.name}</p>
@@ -162,7 +158,7 @@ const Comment: React.FC = () => {
                   <Reply key={responseIndex}>
                     <Replier>
                       <Avatar>
-                        <img src={`${process.env.REACT_APP_UPLOAD_URL}/${comment.avatar}`} alt="Profile"/>
+                        <img src={`${process.env.REACT_APP_UPLOAD_Images_URL}/${comment.avatar}`} alt="Profile"/>
                       </Avatar>
                       <div>
                         <p>{response.name}</p>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext} from 'react';
 import { Avatar } from '@material-ui/core';
 import { Container, Profile } from './styles';
+import { AuthContext } from '../../../contexts';
 
 interface Props {
   subjectCreatorName: string;
@@ -16,13 +17,15 @@ interface Props {
 const Subject: React.FC<Props> = ({
   subjectCreatorName, 
   subjectCreatorType,
-  subjectCreatorAvatar,
+  subjectCreatorAvatar, 
   CommentsNumber, 
   title, 
   SubjectDescription, 
   Module, 
   date
 }) => {
+  const { id, toDownload } = useContext(AuthContext).data.subject;
+
   return (
     <Container>
       <Profile>
@@ -43,7 +46,16 @@ const Subject: React.FC<Props> = ({
         </p>
         <div>
           <span>{date}</span>
-          <button>Download da ficha</button>
+          {
+            toDownload && (
+              <a href={`${process.env.REACT_APP_API_URL}/inatec/subjects/download/${id}`}>Download da ficha</a>
+            )
+          } 
+          {
+            !toDownload && (
+              <strong>Sem arquivo para download</strong>
+            )
+          }
         </div>
       </div>
 

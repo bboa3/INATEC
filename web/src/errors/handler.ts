@@ -1,30 +1,30 @@
 export default {
-  signUp(validetionErros: any, databaseError: any) {
+  render(data: any) {
 
-    if(validetionErros) {
-      if(validetionErros.password) 
-      return validetionErros.password[0];
+    if(data.errors) {
+      if(data.errors.password) 
+      return data.errors.password[0];
 
-      if(validetionErros.username) 
-      return validetionErros.username[0];
+      if(data.errors.username) 
+      return data.errors.username[0];
 
-      if(validetionErros.email) 
-      return validetionErros.email[0];
+      if(data.errors.email) 
+      return data.errors.email[0];
 
-      if(validetionErros.phone) 
-      return validetionErros.phone[0];
+      if(data.errors.phone) 
+      return data.errors.phone[0];
 
-      if(validetionErros.name) 
-      return validetionErros.name[0];
+      if(data.errors.name) 
+      return data.errors.name[0];
 
-      if(validetionErros.gender) 
-      return validetionErros.gender[0];
+      if(data.errors.gender) 
+      return data.errors.gender[0];
 
-      if(validetionErros.teacher) 
-      return validetionErros.teacher[0];
+      if(data.errors.teacher) 
+      return data.errors.teacher[0];
 
-    } else if(databaseError) {
-      return databaseError;
+    } else if(data.error) {
+      return data.error;
     }
   }
 }

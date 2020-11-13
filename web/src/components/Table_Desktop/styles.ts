@@ -13,41 +13,39 @@ export const Table = styled.table`
     box-shadow: none;
   }
 
-  > thead tr {
+  th {
+    border: 0.1px solid #dddddd;
+    padding: 9px 10px;
     background-color: #009879;
     color: var(--white);
     text-align: left;
     font-weight: bold;
   }
 
-  th, td {
-    padding: 9px 10px;
-    border: 1px solid #dddddd;
+  > tbody .table-hours tr td {
+    white-space: nowrap;
   }
 
-  td {
-    opacity: 0.9;
-
-    &:hover {
-      opacity: 1;
-    }
+  > tbody .content {
+    padding: 9px 8px;
   }
-
-  > tbody tr {
+  > tbody .content.header {
     font-weight: bold;
-    border-bottom: 1px solid #dddddd;
   }
 
   > tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
   }
 
-  > tbody tr:last-of-type {
+  > tbody {
     border-bottom: 0.2rem solid #009879;
+    font-size: 1.5rem;
+    font-family: Archivo;
   }
 
   > tbody tr:hover {
     color: #009879;
+    font-weight: bold;
   }
 
   @media (min-width: 786px) {
