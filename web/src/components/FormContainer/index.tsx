@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { 
   Container, 
   Main, 
@@ -45,7 +44,9 @@ const FormContainer: React.FC<Props> = ({ Form }) => {
             +258 8459192 / 842158738
           </div>
           <Media>
-            <Link to="" ><FacebookIcon /></Link>
+            <a rel="noreferrer" target="_blank" href="https://web.facebook.com/INATEC2016" >
+              <FacebookIcon />
+            </a>
           </Media>
         </Contacts>
         
