@@ -16,7 +16,9 @@ export default {
     if(!subjects)
     return response.status(404).json({error: 'Não foi encontrado nenhuma tema'});
 
-    response.json(subjectViews.renderMany(subjects));
+    const subjectsCreatedNumber = await prisma.subject.count();
+
+    response.json(subjectViews.renderMany(subjects, subjectsCreatedNumber));
   },
 
   async show(request: Request, response: Response) {
@@ -29,7 +31,9 @@ export default {
     if(!subject)
     return response.status(404).json({error: 'Tema não encontrado'});
 
-    response.json(subjectViews.render(subject));
+    const subjectsCreatedNumber = await prisma.subject.count();
+
+    response.json(subjectViews.render(subject, subjectsCreatedNumber));
   },
 
   async create(request: Request, response: Response) {
@@ -84,6 +88,8 @@ export default {
       take: 3
     })
 
-    response.status(201).json(subjectViews.renderMany(subjects));
+    const subjectsCreatedNumber = await prisma.subject.count();
+
+    response.status(201).json(subjectViews.renderMany(subjects, subjectsCreatedNumber));
   }
 }

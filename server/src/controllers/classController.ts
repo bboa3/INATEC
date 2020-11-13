@@ -47,7 +47,8 @@ export default {
       course,
       time,
       year,
-      schedule
+      schedule,
+      disciplines
     } = request.body;
 
     const clas = await prisma.class.findOne({
@@ -64,6 +65,7 @@ export default {
         time,
         year,
         schedule,
+        disciplines,
         identity: `${course}${year}${time}`
       }
     })

@@ -7,6 +7,7 @@ export default {
       course: clas.course,
       time: clas.time,
       year: clas.year,
+      disciplines: clas.disciplines,
       schedule: clas.schedule
     };
   },

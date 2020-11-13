@@ -1,7 +1,7 @@
 import { Subject } from '@prisma/client';
 
 export default {
-  render(subject: Subject) {
+  render(subject: Subject, subjectsCreatedNumber: number) {
     return {
       id: subject.id,
       titleType: subject.titleType,
@@ -17,11 +17,12 @@ export default {
       classId: subject.classId,
       created_at: subject.created_at,
       updated_at: subject.updated_at,
-      comments: subject.comments
+      comments: subject.comments,
+      subjectsCreatedNumber: subjectsCreatedNumber
     };
   },
 
-  renderMany(subject: Subject[]) {
-    return subject.map(Subject => this.render(Subject));
+  renderMany(subject: Subject[], subjectsCreatedNumber: number) {
+    return subject.map(Subject => this.render(Subject, subjectsCreatedNumber));
   }
 }
