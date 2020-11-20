@@ -27,7 +27,7 @@ const TableDesktop: React.FC = () => {
 
     monday && (
       monday.map(teacher => (
-        teacher.time.split(",").map(() => (
+        teacher.time.split(",").forEach(() => (
           mondayTeachers.push({
             name: teacher.name,
             discipline: teacher.discipline
@@ -38,7 +38,7 @@ const TableDesktop: React.FC = () => {
 
     tuesday && (
       tuesday.map(teacher => (
-        teacher.time.split(",").map(() => (
+        teacher.time.split(",").forEach(() => (
           tuesdayTeachers.push({
             name: teacher.name, 
             discipline: teacher.discipline
@@ -49,7 +49,7 @@ const TableDesktop: React.FC = () => {
 
     wednesday && (
       wednesday.map(teacher => (
-        teacher.time.split(",").map(() => (
+        teacher.time.split(",").forEach(() => (
           wednesdayTeachers.push({
             name: teacher.name, 
             discipline: teacher.discipline
@@ -60,7 +60,7 @@ const TableDesktop: React.FC = () => {
 
     thursday &&(
       thursday.map(teacher => (
-        teacher.time.split(",").map(() => (
+        teacher.time.split(",").forEach(() => (
           thursdayTeachers.push({
             name: teacher.name, 
             discipline: teacher.discipline
@@ -71,7 +71,7 @@ const TableDesktop: React.FC = () => {
 
     friday && (
       friday.map(teacher => (
-        teacher.time.split(",").map(() => (
+        teacher.time.split(",").forEach(() => (
           fridayTeachers.push({
             name: teacher.name, 
             discipline: teacher.discipline
@@ -82,7 +82,7 @@ const TableDesktop: React.FC = () => {
 
     saturday && (
       saturday.map(teacher => (
-        teacher.time.split(",").map(() => (
+        teacher.time.split(",").forEach(() => (
           saturdayTeachers.push({
             name: teacher.name, 
             discipline: teacher.discipline
