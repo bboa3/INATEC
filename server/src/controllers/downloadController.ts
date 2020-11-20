@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import path from 'path';
-import subjectViews from '../views/subjectsViews';
 
 const prisma = new PrismaClient();
 

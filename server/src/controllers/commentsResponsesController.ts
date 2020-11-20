@@ -33,7 +33,9 @@ export default {
     if(!subjectCommented)
     return response.status(400).json({error: 'Erro au adicionar o comentário'});
 
-    response.json(subjectsViews.render(subjectCommented));
+    const subjectsCreatedNumber = await prisma.subject.count();
+
+    response.json(subjectsViews.render(subjectCommented, subjectsCreatedNumber));
   },
 
   async create(request: Request, response: Response) {
@@ -83,6 +85,8 @@ export default {
     if(!subjectCommented)
     return response.status(400).json({error: 'Erro au adicionar o comentário'});
 
-    response.json(subjectsViews.render(subjectCommented));
+    const subjectsCreatedNumber = await prisma.subject.count();
+
+    response.json(subjectsViews.render(subjectCommented, subjectsCreatedNumber));
   }
 }
