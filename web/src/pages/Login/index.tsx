@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       password
     })
     .then(response => {
-      if(data.user.teacher === true) {
+      if(response.data.teacher === true) {
         const user = response.data;
         setData({...data, user: user});
         

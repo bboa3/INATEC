@@ -80,12 +80,6 @@ const SignUp: React.FC = () => {
         setYear('')
         setPassword('')
 
-        setAlertMessage('Inscrição feita com sucesso')
-        setAlertStyles({
-          display: 'block',
-          background: 'var(--light-blue)'
-        })
-
         if(!data.user.teacher === true) {
           const user = response.data;
           const uClass = response.data.class;

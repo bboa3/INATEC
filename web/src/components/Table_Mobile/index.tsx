@@ -5,14 +5,18 @@ import { AuthContext } from '../../contexts';
 const TableMobile: React.FC = () => {
   const { schedule } = useContext(AuthContext).data.uClass;
 
-  return (
-    <>
-    {
-      schedule && (
+
+  if(!schedule) {
+    return <p>Carregando...</p>
+
+  } else {
+    const { monday, tuesday, thursday, wednesday, friday, saturday, } = schedule;
+
+    return (
         <Table>
           {
-            schedule.monday && (
-              schedule.monday.map(teacher =>  (
+            monday && (
+              monday.map(teacher =>  (
                 <tbody>
                   <tr>
                     <th rowSpan={13}>2ª feira</th>
@@ -37,8 +41,8 @@ const TableMobile: React.FC = () => {
             )
           }
           {
-            schedule.tuesday && (
-              schedule.tuesday.map(teacher =>  (
+            tuesday && (
+              tuesday.map(teacher =>  (
                 <tbody>
                   <tr>
                     <th rowSpan={13}>3ª feira</th>
@@ -63,8 +67,8 @@ const TableMobile: React.FC = () => {
             )
           }
           {
-            schedule.wednesday && (
-              schedule.wednesday.map(teacher =>  (
+            wednesday && (
+              wednesday.map(teacher =>  (
                 <tbody>
                   <tr>
                     <th rowSpan={13}>4ª feira</th>
@@ -89,8 +93,8 @@ const TableMobile: React.FC = () => {
             )
           }
           {
-            schedule.thursday && (
-              schedule.thursday.map(teacher =>  (
+            thursday && (
+              thursday.map(teacher =>  (
                 <tbody>
                   <tr>
                     <th rowSpan={13}>5ª feira</th>
@@ -115,8 +119,8 @@ const TableMobile: React.FC = () => {
             )
           }
           {
-            schedule.friday && (
-              schedule.friday.map(teacher =>  (
+            friday && (
+              friday.map(teacher =>  (
                 <tbody>
                   <tr>
                     <th rowSpan={13}>6ª feira</th>
@@ -141,8 +145,8 @@ const TableMobile: React.FC = () => {
             )
           }
           {
-            schedule.saturday && (
-              schedule.saturday.map(teacher =>  (
+            saturday && (
+              saturday.map(teacher =>  (
                 <tbody>
                   <tr>
                     <th rowSpan={13}>6ª feira</th>
@@ -167,10 +171,8 @@ const TableMobile: React.FC = () => {
             )
           }
         </Table>
-      )
-    }
-    </>
-  )
+    )
+  }
 }
 
 export default TableMobile;
