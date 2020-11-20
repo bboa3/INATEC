@@ -17,53 +17,75 @@ const TableDesktop: React.FC = () => {
   let wednesdayTeachers: typeof TeacherProps = [];
   let thursdayTeachers: typeof TeacherProps = [];
   let fridayTeachers: typeof TeacherProps = [];
+  let saturdayTeachers: typeof TeacherProps = [];
 
 
   const { monday, tuesday, wednesday, thursday, friday, saturday } = schedule;
-  monday.map(teacher => (
-    teacher.time.split(",").map(() => (
-      mondayTeachers.push({
-        name: teacher.name,
-        discipline: teacher.discipline
-      })
+  monday && (
+    monday.map(teacher => (
+      teacher.time.split(",").map(() => (
+        mondayTeachers.push({
+          name: teacher.name,
+          discipline: teacher.discipline
+        })
+      ))
     ))
-  ))
+  )
 
-  tuesday.map(teacher => (
-    teacher.time.split(",").map(() => (
-      tuesdayTeachers.push({
-        name: teacher.name, 
-        discipline: teacher.discipline
-      })
+  tuesday && (
+    tuesday.map(teacher => (
+      teacher.time.split(",").map(() => (
+        tuesdayTeachers.push({
+          name: teacher.name, 
+          discipline: teacher.discipline
+        })
+      ))
     ))
-  ))
+  )
 
-  wednesday.map(teacher => (
-    teacher.time.split(",").map(() => (
-      wednesdayTeachers.push({
-        name: teacher.name, 
-        discipline: teacher.discipline
-      })
+  wednesday && (
+    wednesday.map(teacher => (
+      teacher.time.split(",").map(() => (
+        wednesdayTeachers.push({
+          name: teacher.name, 
+          discipline: teacher.discipline
+        })
+      ))
     ))
-  ))
+  )
 
-  thursday.map(teacher => (
-    teacher.time.split(",").map(() => (
-      thursdayTeachers.push({
-        name: teacher.name, 
-        discipline: teacher.discipline
-      })
+  thursday &&(
+    thursday.map(teacher => (
+      teacher.time.split(",").map(() => (
+        thursdayTeachers.push({
+          name: teacher.name, 
+          discipline: teacher.discipline
+        })
+      ))
     ))
-  ))
+  )
 
-  friday.map(teacher => (
-    teacher.time.split(",").map(() => (
-      fridayTeachers.push({
-        name: teacher.name, 
-        discipline: teacher.discipline
-      })
-    ))
+  friday && (
+    friday.map(teacher => (
+      teacher.time.split(",").map(() => (
+        fridayTeachers.push({
+          name: teacher.name, 
+          discipline: teacher.discipline
+        })
+      ))
   ))
+  )
+
+  saturday && (
+    saturday.map(teacher => (
+      teacher.time.split(",").map(() => (
+        saturdayTeachers.push({
+          name: teacher.name, 
+          discipline: teacher.discipline
+        })
+      ))
+    ))
+  )
   
   return (
     <Table>
@@ -255,6 +277,39 @@ const TableDesktop: React.FC = () => {
                       </tr>
                       {
                         fridayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.name}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                  </tr>
+                </td>
+              )
+            }
+            {
+              saturdayTeachers && (
+                <td>
+                  <th colSpan={2}>Sábado</th>
+                  <tr>
+                    <td>
+                      <tr>
+                        <td className="content header">Disciplina</td>
+                      </tr>
+                      {
+                        saturdayTeachers.map(teacher => (
+                          <tr>
+                            <td className="content">{teacher.discipline}</td>
+                          </tr>
+                        ))
+                      }
+                    </td>
+                    <td>
+                      <tr>
+                        <td className="content header">Docente</td>
+                      </tr>
+                      {
+                        saturdayTeachers.map(teacher => (
                           <tr>
                             <td className="content">{teacher.name}</td>
                           </tr>

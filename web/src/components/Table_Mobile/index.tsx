@@ -6,128 +6,170 @@ const TableMobile: React.FC = () => {
   const { schedule } = useContext(AuthContext).data.uClass;
 
   return (
-    <Table>
-      {
-        schedule.monday.map(teacher =>  (
-          <tbody>
-            <tr>
-              <th rowSpan={13}>2ª feira</th>
-            </tr>
-            {
-              teacher.time.split(",").map(time => (
-                <>
+    <>
+    {
+      schedule && (
+        <Table>
+          {
+            schedule.monday && (
+              schedule.monday.map(teacher =>  (
+                <tbody>
                   <tr>
-                    <td rowSpan={2}>{time}</td>
-                    <td>Disciplina</td>
-                    <td>{teacher.discipline}</td>
+                    <th rowSpan={13}>2ª feira</th>
                   </tr>
-                  <tr>
-                    <td>Docente</td>
-                    <td>{teacher.name}</td>
-                  </tr>
-                </>
+                  {
+                    teacher.time.split(",").map(time => (
+                      <>
+                        <tr>
+                          <td rowSpan={2}>{time}</td>
+                          <td>Disciplina</td>
+                          <td>{teacher.discipline}</td>
+                        </tr>
+                        <tr>
+                          <td>Docente</td>
+                          <td>{teacher.name}</td>
+                        </tr>
+                      </>
+                    ))
+                  }
+                </tbody>
               ))
-            }
-          </tbody>
-        ))
-      }
-      {
-        schedule.tuesday.map(teacher =>  (
-          <tbody>
-            <tr>
-              <th rowSpan={13}>3ª feira</th>
-            </tr>
-            {
-              teacher.time.split(",").map(time => (
-                <>
+            )
+          }
+          {
+            schedule.tuesday && (
+              schedule.tuesday.map(teacher =>  (
+                <tbody>
                   <tr>
-                    <td rowSpan={2}>{time}</td>
-                    <td>Disciplina</td>
-                    <td>{teacher.discipline}</td>
+                    <th rowSpan={13}>3ª feira</th>
                   </tr>
-                  <tr>
-                    <td>Docente</td>
-                    <td>{teacher.name}</td>
-                  </tr>
-                </>
+                  {
+                    teacher.time.split(",").map(time => (
+                      <>
+                        <tr>
+                          <td rowSpan={2}>{time}</td>
+                          <td>Disciplina</td>
+                          <td>{teacher.discipline}</td>
+                        </tr>
+                        <tr>
+                          <td>Docente</td>
+                          <td>{teacher.name}</td>
+                        </tr>
+                      </>
+                    ))
+                  }
+                </tbody>
               ))
-            }
-          </tbody>
-        ))
-      }
-      {
-        schedule.wednesday.map(teacher =>  (
-          <tbody>
-            <tr>
-              <th rowSpan={13}>4ª feira</th>
-            </tr>
-            {
-              teacher.time.split(",").map(time => (
-                <>
+            )
+          }
+          {
+            schedule.wednesday && (
+              schedule.wednesday.map(teacher =>  (
+                <tbody>
                   <tr>
-                    <td rowSpan={2}>{time}</td>
-                    <td>Disciplina</td>
-                    <td>{teacher.discipline}</td>
+                    <th rowSpan={13}>4ª feira</th>
                   </tr>
-                  <tr>
-                    <td>Docente</td>
-                    <td>{teacher.name}</td>
-                  </tr>
-                </>
+                  {
+                    teacher.time.split(",").map(time => (
+                      <>
+                        <tr>
+                          <td rowSpan={2}>{time}</td>
+                          <td>Disciplina</td>
+                          <td>{teacher.discipline}</td>
+                        </tr>
+                        <tr>
+                          <td>Docente</td>
+                          <td>{teacher.name}</td>
+                        </tr>
+                      </>
+                    ))
+                  }
+                </tbody>
               ))
-            }
-          </tbody>
-        ))
-      }
-      {
-        schedule.thursday.map(teacher =>  (
-          <tbody>
-            <tr>
-              <th rowSpan={13}>5ª feira</th>
-            </tr>
-            {
-              teacher.time.split(",").map(time => (
-                <>
+            )
+          }
+          {
+            schedule.thursday && (
+              schedule.thursday.map(teacher =>  (
+                <tbody>
                   <tr>
-                    <td rowSpan={2}>{time}</td>
-                    <td>Disciplina</td>
-                    <td>{teacher.discipline}</td>
+                    <th rowSpan={13}>5ª feira</th>
                   </tr>
-                  <tr>
-                    <td>Docente</td>
-                    <td>{teacher.name}</td>
-                  </tr>
-                </>
+                  {
+                    teacher.time.split(",").map(time => (
+                      <>
+                        <tr>
+                          <td rowSpan={2}>{time}</td>
+                          <td>Disciplina</td>
+                          <td>{teacher.discipline}</td>
+                        </tr>
+                        <tr>
+                          <td>Docente</td>
+                          <td>{teacher.name}</td>
+                        </tr>
+                      </>
+                    ))
+                  }
+                </tbody>
               ))
-            }
-          </tbody>
-        ))
-      }
-      {
-        schedule.friday.map(teacher =>  (
-          <tbody>
-            <tr>
-              <th rowSpan={13}>6ª feira</th>
-            </tr>
-            {
-              teacher.time.split(",").map(time => (
-                <>
+            )
+          }
+          {
+            schedule.friday && (
+              schedule.friday.map(teacher =>  (
+                <tbody>
                   <tr>
-                    <td rowSpan={2}>{time}</td>
-                    <td>Disciplina</td>
-                    <td>{teacher.discipline}</td>
+                    <th rowSpan={13}>6ª feira</th>
                   </tr>
-                  <tr>
-                    <td>Docente</td>
-                    <td>{teacher.name}</td>
-                  </tr>
-                </>
+                  {
+                    teacher.time.split(",").map(time => (
+                      <>
+                        <tr>
+                          <td rowSpan={2}>{time}</td>
+                          <td>Disciplina</td>
+                          <td>{teacher.discipline}</td>
+                        </tr>
+                        <tr>
+                          <td>Docente</td>
+                          <td>{teacher.name}</td>
+                        </tr>
+                      </>
+                    ))
+                  }
+                </tbody>
               ))
-            }
-          </tbody>
-        ))
-      }
-    </Table>
+            )
+          }
+          {
+            schedule.saturday && (
+              schedule.saturday.map(teacher =>  (
+                <tbody>
+                  <tr>
+                    <th rowSpan={13}>6ª feira</th>
+                  </tr>
+                  {
+                    teacher.time.split(",").map(time => (
+                      <>
+                        <tr>
+                          <td rowSpan={2}>{time}</td>
+                          <td>Disciplina</td>
+                          <td>{teacher.discipline}</td>
+                        </tr>
+                        <tr>
+                          <td>Docente</td>
+                          <td>{teacher.name}</td>
+                        </tr>
+                      </>
+                    ))
+                  }
+                </tbody>
+              ))
+            )
+          }
+        </Table>
+      )
+    }
+    </>
   )
 }
 
