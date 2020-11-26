@@ -82,7 +82,7 @@ const AddSubject: React.FC<Props> = ({
           <Avatar>
             <img src={avatar} alt="Profile"/>
           </Avatar>
-        <span>{username}</span>
+          <span>{username}</span>
         </Profile>
         
         <NewSubject onClick={ e => { 
@@ -141,8 +141,8 @@ const AddSubject: React.FC<Props> = ({
               />
               <datalist id="modules">
                 {
-                  disciplines.split(",").map(discipline => (
-                    <option value={discipline} />
+                  disciplines.split(",").map((discipline, index) => (
+                    <option key={index} value={discipline} />
                   ))
                 }
               </datalist>

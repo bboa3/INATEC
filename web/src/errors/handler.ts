@@ -1,4 +1,4 @@
-export default {
+const errorHandle = {
   render(data: any) {
 
     if(data.errors) {
@@ -28,3 +28,5 @@ export default {
     }
   }
 }
+
+export default errorHandle;

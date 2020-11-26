@@ -32,24 +32,21 @@ const Class: React.FC = () => {
   const [ pushDown, setPushDown ] = useState('push-up');
   const [ subjectsNumber, setSubjectsNumber ] = useState(2);
 
-  const { user, uClass } = data;
-
-  const HandleRequests = async () => {
-    const classResponse = await api.get(`/inatec/class/${id}`);
-
-    const subjectsResponse = await api.post('inatec/get/subjects', {
-      subjectsNumber,
-      classId: id,
-    })
-
-    const clas = classResponse.data;
-    const subjects = subjectsResponse.data;
-
-    setData({...data, uClass: clas, subjects: subjects})
-  }
+  const { user, uClass, subjects } = data;
 
   useEffect(() => {
-    HandleRequests()
+    api.get(`/inatec/class/${id}`)
+    .then(response => {
+      const clas = response.data
+      setData({...data, uClass: clas})
+    })
+
+    api.get(`inatec/get/subjects/${subjectsNumber}/${id}`)
+    .then(response => {
+      const subjectsResponse = response.data;
+      setData({...data, subjects: subjectsResponse})
+    })
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subjectsNumber]) 
 
@@ -75,24 +72,30 @@ const Class: React.FC = () => {
                 <h1>{uClass.course}</h1>
                 <ClassBlock>
                   {
-                    data.subjects && (
+                    subjects && (
                       <Subject>
                         <SubjectHeader>
                           <img src={roadToKnowledgeImg} alt="Caminho para o conhecimento"/>
                           <div>
-                            <h3> {data.subjects[0].subjectsCreatedNumber} Trabalhos e temas debatidos</h3>
+                            <h3> 
+                              {
+                                subjects[0] ? (
+                                  subjects[0].subjectsCreatedNumber
+                                ): 0
+                              } Trabalhos e temas debatidos
+                            </h3>
                           </div>
                         </SubjectHeader>
 
                         {
-                          data.subjects.map((subject) => {
+                          subjects.map((subject) => {
                             let titleParts = '';
                             subject.title.split(" ").map(word => {
                               return titleParts = `${titleParts}-${word}`;
                             })
 
                             return (
-                              <Content>
+                              <Content key={subject.id}>
                                 <Link to={`/in/chats/${titleParts}/${subject.id}`}>
                                   <ContentHeader>
                                     <AvatarContainer>
@@ -127,7 +130,7 @@ const Class: React.FC = () => {
                   }
 
                   {
-                    !data.subjects  && (
+                    !subjects  && (
                       <p>Carregando...</p>
                     )
                   }

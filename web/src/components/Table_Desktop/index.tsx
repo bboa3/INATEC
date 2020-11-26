@@ -5,6 +5,8 @@ import { Table } from './styles';
 
 const TableDesktop: React.FC = () => {
   const { schedule } = useContext(AuthContext).data.uClass;
+  const { monday, tuesday, wednesday, thursday, friday, saturday } = schedule;
+
   const TeacherProps = [
     {
       name: '',
@@ -23,8 +25,7 @@ const TableDesktop: React.FC = () => {
     return <p>Carregando...</p>
 
   } else {
-    const { monday, tuesday, wednesday, thursday, friday, saturday } = schedule;
-
+    
     monday && (
       monday.map(teacher => (
         teacher.time.split(",").forEach(() => (
@@ -126,7 +127,7 @@ const TableDesktop: React.FC = () => {
         </td>
         
         {
-          mondayTeachers && (
+          monday && (
             <td>
               <th colSpan={2}>2ª feira</th>
             <tr>
@@ -135,8 +136,8 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Disciplina</td>
               </tr>
               {
-                mondayTeachers.map(teacher => (
-                <tr>
+                mondayTeachers.map((teacher, index) => (
+                <tr key={index}>
                   <td className="content">{teacher.discipline}</td>
                 </tr>
                 ))
@@ -147,9 +148,9 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Docente</td>
                 </tr>
                   {
-                    mondayTeachers.map(teacher => (
-                      <tr>
-                      <td className="content">{teacher.name}</td>
+                    mondayTeachers.map((teacher, index) => (
+                      <tr key={index}>
+                        <td className="content">{teacher.name}</td>
                       </tr>
                       ))
                   }
@@ -159,17 +160,17 @@ const TableDesktop: React.FC = () => {
           )
         }
         {
-          tuesdayTeachers && (
+          tuesday && (
             <td>
-              <th colSpan={2}>2ª feira</th>
+              <th colSpan={2}>3ª feira</th>
             <tr>
             <td>
               <tr>
                 <td className="content header">Disciplina</td>
               </tr>
               {
-                tuesdayTeachers.map(teacher => (
-                <tr>
+                tuesdayTeachers.map((teacher, index) => (
+                <tr key={index}>
                   <td className="content">{teacher.discipline}</td>
                 </tr>
                 ))
@@ -180,11 +181,11 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Docente</td>
                 </tr>
                   {
-                    tuesdayTeachers.map(teacher => (
-                      <tr>
-                      <td className="content">{teacher.name}</td>
+                    tuesdayTeachers.map((teacher, index) => (
+                      <tr key={index}>
+                        <td className="content">{teacher.name}</td>
                       </tr>
-                      ))
+                    ))
                   }
                 </td>
               </tr>
@@ -192,17 +193,17 @@ const TableDesktop: React.FC = () => {
           )
         }
         {
-          wednesdayTeachers && (
+          wednesday && (
             <td>
-              <th colSpan={2}>2ª feira</th>
+              <th colSpan={2}>4ª feira</th>
             <tr>
             <td>
               <tr>
                 <td className="content header">Disciplina</td>
               </tr>
               {
-                wednesdayTeachers.map(teacher => (
-                <tr>
+                wednesdayTeachers.map((teacher, index) => (
+                <tr key={index}>
                   <td className="content">{teacher.discipline}</td>
                 </tr>
                 ))
@@ -213,11 +214,11 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Docente</td>
                 </tr>
                   {
-                    wednesdayTeachers.map(teacher => (
-                      <tr>
-                      <td className="content">{teacher.name}</td>
+                    wednesdayTeachers.map((teacher, index) => (
+                      <tr key={index}>
+                        <td className="content">{teacher.name}</td>
                       </tr>
-                      ))
+                    ))
                   }
                 </td>
               </tr>
@@ -225,17 +226,17 @@ const TableDesktop: React.FC = () => {
           )
         }
         {
-          thursdayTeachers && (
+          thursday && (
             <td>
-              <th colSpan={2}>2ª feira</th>
+              <th colSpan={2}>5ª feira</th>
             <tr>
             <td>
               <tr>
                 <td className="content header">Disciplina</td>
               </tr>
               {
-                thursdayTeachers.map(teacher => (
-                <tr>
+                thursdayTeachers.map((teacher, index) => (
+                <tr key={index}>
                   <td className="content">{teacher.discipline}</td>
                 </tr>
                 ))
@@ -246,11 +247,11 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Docente</td>
                 </tr>
                   {
-                    thursdayTeachers.map(teacher => (
-                      <tr>
-                      <td className="content">{teacher.name}</td>
+                    thursdayTeachers.map((teacher, index) => (
+                      <tr key={index}>
+                        <td className="content">{teacher.name}</td>
                       </tr>
-                      ))
+                    ))
                   }
                 </td>
               </tr>
@@ -258,17 +259,17 @@ const TableDesktop: React.FC = () => {
           )
         }
         {
-          fridayTeachers && (
+          friday && (
             <td>
-              <th colSpan={2}>2ª feira</th>
+              <th colSpan={2}>6ª feira</th>
             <tr>
             <td>
               <tr>
                 <td className="content header">Disciplina</td>
               </tr>
               {
-                fridayTeachers.map(teacher => (
-                <tr>
+                fridayTeachers.map((teacher, index) => (
+                <tr key={index}>
                   <td className="content">{teacher.discipline}</td>
                 </tr>
                 ))
@@ -279,11 +280,11 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Docente</td>
                 </tr>
                   {
-                    fridayTeachers.map(teacher => (
-                      <tr>
-                      <td className="content">{teacher.name}</td>
+                    fridayTeachers.map((teacher, index) => (
+                      <tr key={index}>
+                        <td className="content">{teacher.name}</td>
                       </tr>
-                      ))
+                    ))
                   }
                 </td>
               </tr>
@@ -291,17 +292,17 @@ const TableDesktop: React.FC = () => {
           )
         }
         {
-          saturdayTeachers && (
+          saturday && (
             <td>
-              <th colSpan={2}>2ª feira</th>
+              <th colSpan={2}>Sábado</th>
             <tr>
             <td>
               <tr>
                 <td className="content header">Disciplina</td>
               </tr>
               {
-                saturdayTeachers.map(teacher => (
-                <tr>
+                saturdayTeachers.map((teacher, index) => (
+                <tr key={index}>
                   <td className="content">{teacher.discipline}</td>
                 </tr>
                 ))
@@ -312,11 +313,11 @@ const TableDesktop: React.FC = () => {
                 <td className="content header">Docente</td>
                 </tr>
                   {
-                    saturdayTeachers.map(teacher => (
-                      <tr>
-                      <td className="content">{teacher.name}</td>
+                    saturdayTeachers.map((teacher, index) => (
+                      <tr key={index}>
+                        <td className="content">{teacher.name}</td>
                       </tr>
-                      ))
+                    ))
                   }
                 </td>
               </tr>

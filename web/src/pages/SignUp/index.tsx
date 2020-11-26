@@ -93,7 +93,7 @@ const SignUp: React.FC = () => {
 
           history.push(`/in/all-class`);
         }
-      }).catch((err) => {
+      }).catch(err => {
         const error = HandleErrors.render(err.response.data);
         setAlertMessage(error);
 

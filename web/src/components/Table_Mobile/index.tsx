@@ -17,7 +17,7 @@ const TableMobile: React.FC = () => {
           {
             monday && (
               monday.map(teacher =>  (
-                <tbody>
+                <tbody key={teacher.name}>
                   <tr>
                     <th rowSpan={13}>2ª feira</th>
                   </tr>
@@ -43,12 +43,12 @@ const TableMobile: React.FC = () => {
           {
             tuesday && (
               tuesday.map(teacher =>  (
-                <tbody>
+                <tbody key={teacher.name}>
                   <tr>
                     <th rowSpan={13}>3ª feira</th>
                   </tr>
                   {
-                    teacher.time.split(",").map(time => (
+                    teacher.time.split(",").map((time) => (
                       <>
                         <tr>
                           <td rowSpan={2}>{time}</td>
@@ -69,7 +69,7 @@ const TableMobile: React.FC = () => {
           {
             wednesday && (
               wednesday.map(teacher =>  (
-                <tbody>
+                <tbody key={teacher.name}>
                   <tr>
                     <th rowSpan={13}>4ª feira</th>
                   </tr>
@@ -95,7 +95,7 @@ const TableMobile: React.FC = () => {
           {
             thursday && (
               thursday.map(teacher =>  (
-                <tbody>
+                <tbody key={teacher.name}>
                   <tr>
                     <th rowSpan={13}>5ª feira</th>
                   </tr>
@@ -121,7 +121,7 @@ const TableMobile: React.FC = () => {
           {
             friday && (
               friday.map(teacher =>  (
-                <tbody>
+                <tbody key={teacher.name}>
                   <tr>
                     <th rowSpan={13}>6ª feira</th>
                   </tr>
@@ -147,9 +147,9 @@ const TableMobile: React.FC = () => {
           {
             saturday && (
               saturday.map(teacher =>  (
-                <tbody>
+                <tbody key={teacher.name}>
                   <tr>
-                    <th rowSpan={13}>6ª feira</th>
+                    <th rowSpan={13}>Sábado</th>
                   </tr>
                   {
                     teacher.time.split(",").map(time => (
