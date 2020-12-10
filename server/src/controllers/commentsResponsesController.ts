@@ -12,7 +12,7 @@ export default {
       responseIndex
     } = request.body;
 
-    const subject = await prisma.subject.findOne({
+    const subject = await prisma.subject.findUnique({
       where: {id},
       select: { comments: true }
     })
@@ -46,14 +46,14 @@ export default {
       commentResponse
     } = request.body;
 
-    const subject = await prisma.subject.findOne({
+    const subject = await prisma.subject.findUnique({
       where: {id},
       select: { comments: true }
     })
     if(!subject)
     return response.status(400).json({error: 'Problemas para encontrar o tema que pretende responder o comentário'});
 
-    const user = await prisma.users.findOne({
+    const user = await prisma.users.findUnique({
       where: {id: userId},
       select: {
         name: true,

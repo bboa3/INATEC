@@ -1,28 +1,34 @@
 import multer, {FileFilterCallback} from 'multer';
 import path from 'path';
+import { Request } from 'express';
 
 export default {
   storage: multer.diskStorage({
     destination: path.join(__dirname, '..', '..', 'uploads', 'images'),
     filename: (request, file, cb) => {
-      const fileName = `${Date.now()}-${file.originalname}`;
+      const name = file.originalname.toLowerCase().split(' ').join('-');
+      const fileName = `${Date.now()}-${name}`;
 
       cb(null, fileName);
     }
   }),
-  fileFilter: (rep: any, file: any, cb: FileFilterCallback) => {
+  limits: { fileSize: 200 * 1024 * 1024 },
+  fileFilter: function(rep: Request, file: Express.Multer.File, cb: FileFilterCallback) {
     const allowedMimes = [
-      'images/jpeg',
-      'images/pjpeg',
-      'images/png',
-      'images/jpg',
-      'images/svg',
+      'image/jpeg',
+      'image/pjpeg',
+      'image/png',
+      'image/svg+xml',
+      'image/svg',
     ]
 
-    if(allowedMimes.includes(file.mimeType)) {
+    if(allowedMimes.includes(file.mimetype)) {
       cb(null, true)
     } else {
-      cb(new Error('Por favor selecione arquivos do tipo jpg, png, jpeg, pjpeg ou svg'))
+      cb(null, false);
+      return cb(
+        new Error('Arquivo invalido. Apenas arquivos jpg, png, jpeg, pjpeg ou svg são permitidos.')
+      );
     }
   }
 }

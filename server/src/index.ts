@@ -1,6 +1,4 @@
 import express from 'express';
-import http from 'http';
-import socket from 'socket.io';
 import cors from 'cors';
 import 'express-async-errors';
 import routes from './routes';
@@ -21,4 +19,4 @@ app.use('/uploads/images', express.static(path.join(__dirname, '..', 'uploads', 
 app.use('/uploads/pdf', express.static(path.join(__dirname, '..', 'uploads', 'pdf')));
 app.use(errorHandler);
 
-app.listen(process.env.PORT || 3002);
+app.listen(process.env.HTTP_PORT || 3002);

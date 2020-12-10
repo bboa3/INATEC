@@ -92,7 +92,7 @@ export default {
       response.status(201).json(userViews.renderTeacher(newTeacher));
     } else {
       // save students
-      const classId = await prisma.class.findOne({
+      const classId = await prisma.class.findUnique({
         where: {
           identity: `${course}${year}${time}`
         },
@@ -120,7 +120,7 @@ export default {
         }
       })
 
-      const newUserClass = await prisma.class.findOne({where: {id: newUser.classId!}})
+      const newUserClass = await prisma.class.findUnique({where: {id: newUser.classId!}})
       response.status(201).json(userViews.render(newUser, newUserClass!));
     }
   }

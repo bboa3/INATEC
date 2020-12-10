@@ -8,7 +8,7 @@ export default {
   async index(request: Request, response: Response) {
     const { id } = request.params;
 
-    const subject = await prisma.subject.findOne({
+    const subject = await prisma.subject.findUnique({
       where: { id },
       select: {pdf: true}
     })

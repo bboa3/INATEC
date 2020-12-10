@@ -12,7 +12,7 @@ export default {
 
       userId: subject.userId,
       name: subject.name,
-      avatar: `http://localhost:${process.env.PORT}/uploads/images/${subject.avatar}`,
+      avatar: `http://localhost:${process.env.HTTP_PORT}/uploads/images/${subject.avatar}`,
       teacher: subject.teacher,
       classId: subject.classId,
       created_at: subject.created_at,

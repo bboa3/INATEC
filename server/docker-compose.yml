@@ -9,7 +9,7 @@ services:
       - db-data:/home/inatec/db/data
     networks:
       - inatec-network
-    container_name: "postgresdb"
+    container_name: "inatecdb"
     restart: "always"
     ports:
       - "5432:5432"
@@ -17,7 +17,30 @@ services:
       - POSTGRES_USER=${PG_USERNAME}
       - POSTGRES_PASSWORD=${PG_PASSWORD}
       - POSTGRES_DB=${PG_DATABASE}
+  # inatec-server:
+  #   build: .
+  #   env_file:
+  #     - ./.env
+  #   volumes:
+  #     - server-data:/home/inatec/server
+  #     - node_modules:/home/inatec/server/node_modules
+  #   environment:
+  #     - POSTGRES_URL=postgresdb
+  #   networks:
+  #     - inatec-network
+  #   container_name: "inatec-server"
+  #   command: npm run prod
+  #   ports:
+  #     - ${HTTP_PORT}:${HTTP_PORT}
+  #   deploy:
+  #     update_config:
+  #       parallelism: 2
+  #     restart_policy:
+  #       condition: on-failure
+        
 networks:
     inatec-network:
 volumes:
     db-data:
+    # server-data:
+    # node_modules:

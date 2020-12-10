@@ -16,7 +16,7 @@ export default {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const userClass = await prisma.class.findOne({where: {id}});
+    const userClass = await prisma.class.findUnique({where: {id}});
     if(!userClass)
     return response.status(404).json({error: 'Turma não encontrado'});
 
@@ -51,7 +51,7 @@ export default {
       disciplines
     } = request.body;
 
-    const clas = await prisma.class.findOne({
+    const clas = await prisma.class.findUnique({
       where: {
         identity: `${course}${year}${time}`
       }

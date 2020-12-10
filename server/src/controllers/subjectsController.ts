@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export default {
   async index(request: Request, response: Response) {
-    const { subjectsNumber, classId } = request.body;
+    const { subjectsNumber, classId } = request.params;
 
     const subjects = await prisma.subject.findMany({ 
       where: { classId },
@@ -24,9 +24,7 @@ export default {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    const subject = await prisma.subject.findOne({ 
-      where: { id }
-    })
+    const subject = await prisma.subject.findUnique({ where: { id } })
 
     if(!subject)
     return response.status(404).json({error: 'Tema não encontrado'});
@@ -46,7 +44,7 @@ export default {
       classId
     } = request.body;
 
-    const user = await prisma.users.findOne({
+    const user = await prisma.users.findUnique({
       where: {username: username},
       select: {
         name: true,
