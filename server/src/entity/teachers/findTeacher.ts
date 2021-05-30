@@ -3,7 +3,7 @@ import { PrismaClient } from ".prisma/client";
 const prisma = new PrismaClient()
 
 
-const findTeacherByEmail = async (
+const findTeacher = async (
   teacher: { 
     email?: string, 
     username?: string 
@@ -27,4 +27,4 @@ const findTeacherByEmail = async (
   })
 }
 
-export default findTeacherByEmail
+export default findTeacher

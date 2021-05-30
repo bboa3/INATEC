@@ -2,8 +2,30 @@ import { Request, Response } from 'express';
 import creteClass from '../../entity/classes/createClass';
 import findClass from '../../entity/classes/findClassId';
 import findTime from '../../entity/classes/findTime';
+import getAllClasses from '../../entity/classes/getAllClasses';
+import getClass from '../../entity/classes/getClass';
+import findTeacher from '../../entity/teachers/findTeacher';
+import classesView from '../../views/classesViews';
 
 export default {
+  async index(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const clss = await getClass(id);
+
+    if(!clss)
+    return response.status(404).json({error: 'Class not found'});
+
+
+    response.status(200).json(classesView.render(clss));
+  },
+
+  async indexAll(request: Request, response: Response) {
+    const classes = await getAllClasses();
+
+    response.status(200).json(classesView.renderMany(classes));
+  },
+
   async create(request: Request, response: Response) {
     const {
       course,
@@ -31,6 +53,6 @@ export default {
       year
     });
 
-    response.status(201).json(newClass);
+    response.status(201).json(classesView.render(newClass));
   }
 }

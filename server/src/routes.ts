@@ -26,6 +26,8 @@ routes.post('/create/student', studentsValidator, studentsController.create);
 routes.post('/login/teacher', teachersController.index);
 routes.post('/create/teacher', teachersValidator, teachersController.create);
 
+routes.get('/classes/:id', classesController.index);
+routes.get('/classes', classesController.indexAll);
 routes.post('/create/class', classValidator, classesController.create);
 
 routes.post('/create/class/lessons', lessonsValidator, lessonsController.create);
