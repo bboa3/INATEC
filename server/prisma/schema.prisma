@@ -7,52 +7,179 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
+model students {
+  id                String   @id @default(uuid())
+  name              String
+  username          String  @unique
+  password          String
+  avatar            String
+  email             String?    @unique
+  tel               String?
+  tel2              String?
+  born              DateTime?
+  chats             chats[]
+  comments          comments[]
+  class             classes  @relation(fields: [class_id], references: [id])
+  class_id          String
+  bi                bi?    @relation(fields: [bi_id], references: [id])
+  bi_id             String?
+  genders           genders?    @relation(fields: [gender_id], references: [id])
+  gender_id         Int?
+  address           address? @relation(fields: [address_id], references: [id])
+  address_id        Int?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now())
+  deleted           Boolean  @default(false)
+}
+
+model classes {
   id          String   @id @default(uuid())
-  name        String
-  username    String  @unique
-  email       String   @unique
-  phone       String
-  gender      String 
-  password    String
-  teacher     Boolean
-  avatar      String
-  subjets     Subject[]
-  class       Class? @relation(fields: [classId], references: [id])
-  classId     String?
-  created_at  DateTime @default(now()) 
+  course      String  
+  year        Int
+  time        times  @relation(fields: [time_id], references: [id])
+  time_id     Int
+  students    students[]
+  lessons     lessons[]
+  created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 }
 
-model Class {
-  id       String   @id @default(uuid())
-  identity String   @unique
-  course   String
-  time     String 
-  year     String
-  user     Users[]
-  schedule Json
-  Subjects Subject[]
-  disciplines  String
+model times {
+  id        Int @id @default(autoincrement())
+  time      String @unique 
+  classes   classes[]
 }
 
-model Subject {
+model lessons {
+  id          String   @id    @default(uuid())
+  day_week    String  
+  start_at    String
+  end_at      String
+  chats       chats[]
+  teacher     teachers   @relation(fields: [teacher_id], references: [id])
+  teacher_id  String
+  class       classes   @relation(fields: [class_id], references: [id])
+  class_id    String
+  created_at  DateTime   @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+model teachers {
+  id                String   @id @default(uuid())
+  name              String
+  username          String   @unique
+  password          String
+  avatar            String
+  module            String
+  email             String?    @unique
+  tel               String?
+  tel2              String?
+  born              DateTime?
+  lessons           lessons[]
+  chats             chats[]
+  comments          comments[]
+  bi                bi?    @relation(fields: [bi_id], references: [id])
+  bi_id             String?
+  genders           genders?    @relation(fields: [gender_id], references: [id])
+  gender_id         Int?
+  address           address? @relation(fields: [address_id], references: [id])
+  address_id        Int?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now())
+  deleted           Boolean  @default(false)
+}
+
+model chats {
   id          String   @id @default(uuid())
-  titleType   String
   title       String
-  module      String
-  pdf         String?
-  toDownload  Boolean
   description String 
-  comments    Json?
-  user        Users    @relation(fields: [userId], references: [id])
-  userId      String
-  name        String
-  teacher     Boolean
-  avatar      String
-  class       Class    @relation(fields: [classId], references: [id])
-  classId     String
+  pdf         String?
+  by_teacher  Boolean
+  lesson      lessons    @relation(fields: [lesson_Id], references: [id])
+  lesson_Id   String
+  comments    comments[]
+  student     students?    @relation(fields: [student_Id], references: [id])
+  student_Id  String?
+  teacher     teachers?    @relation(fields: [teacher_id], references: [id])
+  teacher_id  String?
   created_at  DateTime @default(now()) 
   updated_at  DateTime @updatedAt
 }
 
+model comments {
+  id          Int         @id @default(autoincrement())
+  comment     String
+  chat        chats    @relation(fields: [chat_Id], references: [id])
+  chat_Id     String
+  student     students?    @relation(fields: [student_Id], references: [id])
+  student_Id  String?
+  teacher     teachers?    @relation(fields: [teacher_id], references: [id])
+  teacher_id  String?
+  created_at  DateTime @default(now()) 
+  updated_at  DateTime @updatedAt
+}
+
+model genders {
+  id        Int @id @default(autoincrement())
+  gender    String  @unique
+  student   students[]
+  teacher   teachers[]
+}
+
+model bi {
+  id                String @id
+  issued_in         String
+  issuance_date     DateTime
+  expiry_date       DateTime
+  student           students?
+  teacher           teachers?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now())
+}
+
+model address {
+  id                Int @id @default(autoincrement())
+  provinces         provinces?  @relation(fields: [province_id], references: [id])
+  province_id       Int
+  districts         districts? @relation(fields: [district_id], references: [id])
+  district_id       Int
+  bairro            bairros? @relation(fields: [bairro_id], references: [id])
+  bairro_id         Int
+  block             Int?
+  house             Int?
+  teacher           teachers?
+  students          students?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now())
+}
+
+model provinces {
+  id            Int @id @default(autoincrement())
+  name          String  @unique
+  districts     districts[] 
+  address       address?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now())
+}
+
+model districts {
+  id            Int @id @default(autoincrement())
+  name          String  
+  Zip_code      Int?
+  bairro        bairros[]
+  provinces     provinces  @relation(fields: [province_id], references: [id])
+  province_id   Int
+  address       address?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now())
+}
+
+model bairros {
+  id            Int @id @default(autoincrement())
+  name          String  @unique 
+  districts     districts  @relation(fields: [district_id], references: [id])
+  district_id   Int
+  address       address[]
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now())
+}
