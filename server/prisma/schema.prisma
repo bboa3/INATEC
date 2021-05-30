@@ -90,17 +90,17 @@ model teachers {
 }
 
 model chats {
-  id          String   @id @default(uuid())
+  id          Int   @id @default(autoincrement())
   title       String
   description String 
   pdf         String?
   by_teacher  Boolean
-  lesson      lessons    @relation(fields: [lesson_Id], references: [id])
-  lesson_Id   String
+  lessons     lessons    @relation(fields: [lesson_id], references: [id])
+  lesson_id   String
   comments    comments[]
-  student     students?    @relation(fields: [student_Id], references: [id])
-  student_Id  String?
-  teacher     teachers?    @relation(fields: [teacher_id], references: [id])
+  students    students?    @relation(fields: [student_id], references: [id])
+  student_id  String?
+  teachers    teachers?    @relation(fields: [teacher_id], references: [id])
   teacher_id  String?
   created_at  DateTime @default(now()) 
   updated_at  DateTime @updatedAt
@@ -109,11 +109,11 @@ model chats {
 model comments {
   id          Int         @id @default(autoincrement())
   comment     String
-  chat        chats    @relation(fields: [chat_Id], references: [id])
-  chat_Id     String
-  student     students?    @relation(fields: [student_Id], references: [id])
-  student_Id  String?
-  teacher     teachers?    @relation(fields: [teacher_id], references: [id])
+  chats       chats    @relation(fields: [chat_id], references: [id])
+  chat_id     Int
+  students    students?    @relation(fields: [student_id], references: [id])
+  student_id  String?
+  teachers    teachers?    @relation(fields: [teacher_id], references: [id])
   teacher_id  String?
   created_at  DateTime @default(now()) 
   updated_at  DateTime @updatedAt

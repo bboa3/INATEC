@@ -24,10 +24,18 @@ CREATE TABLE "students" (
 CREATE TABLE "classes" (
     "id" TEXT NOT NULL,
     "course" TEXT NOT NULL,
-    "time" TEXT NOT NULL,
-    "year" TEXT NOT NULL,
+    "year" INTEGER NOT NULL,
+    "time_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "times" (
+    "id" SERIAL NOT NULL,
+    "time" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -36,8 +44,8 @@ CREATE TABLE "classes" (
 CREATE TABLE "lessons" (
     "id" TEXT NOT NULL,
     "day_week" TEXT NOT NULL,
-    "start_at" TIMESTAMP(3) NOT NULL,
-    "end_at" TIMESTAMP(3) NOT NULL,
+    "start_at" TEXT NOT NULL,
+    "end_at" TEXT NOT NULL,
     "teacher_id" TEXT NOT NULL,
     "class_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -50,8 +58,10 @@ CREATE TABLE "lessons" (
 CREATE TABLE "teachers" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "avatar" TEXT NOT NULL,
-    "discipline" TEXT NOT NULL,
+    "module" TEXT NOT NULL,
     "email" TEXT,
     "tel" TEXT,
     "tel2" TEXT,
@@ -68,13 +78,13 @@ CREATE TABLE "teachers" (
 
 -- CreateTable
 CREATE TABLE "chats" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "pdf" TEXT,
     "by_teacher" BOOLEAN NOT NULL,
-    "lesson_Id" TEXT NOT NULL,
-    "student_Id" TEXT,
+    "lesson_id" TEXT NOT NULL,
+    "student_id" TEXT,
     "teacher_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -86,8 +96,8 @@ CREATE TABLE "chats" (
 CREATE TABLE "comments" (
     "id" SERIAL NOT NULL,
     "comment" TEXT NOT NULL,
-    "chat_Id" TEXT NOT NULL,
-    "student_Id" TEXT,
+    "chat_id" INTEGER NOT NULL,
+    "student_id" TEXT,
     "teacher_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -175,7 +185,10 @@ CREATE UNIQUE INDEX "students_bi_id_unique" ON "students"("bi_id");
 CREATE UNIQUE INDEX "students_address_id_unique" ON "students"("address_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "classes.course_unique" ON "classes"("course");
+CREATE UNIQUE INDEX "times.time_unique" ON "times"("time");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "teachers.username_unique" ON "teachers"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "teachers.email_unique" ON "teachers"("email");
@@ -214,6 +227,9 @@ ALTER TABLE "students" ADD FOREIGN KEY ("gender_id") REFERENCES "genders"("id") 
 ALTER TABLE "students" ADD FOREIGN KEY ("address_id") REFERENCES "address"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "classes" ADD FOREIGN KEY ("time_id") REFERENCES "times"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "lessons" ADD FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -229,19 +245,19 @@ ALTER TABLE "teachers" ADD FOREIGN KEY ("gender_id") REFERENCES "genders"("id") 
 ALTER TABLE "teachers" ADD FOREIGN KEY ("address_id") REFERENCES "address"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "chats" ADD FOREIGN KEY ("lesson_Id") REFERENCES "lessons"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "chats" ADD FOREIGN KEY ("lesson_id") REFERENCES "lessons"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "chats" ADD FOREIGN KEY ("student_Id") REFERENCES "students"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "chats" ADD FOREIGN KEY ("student_id") REFERENCES "students"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "chats" ADD FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "comments" ADD FOREIGN KEY ("chat_Id") REFERENCES "chats"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "comments" ADD FOREIGN KEY ("chat_id") REFERENCES "chats"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "comments" ADD FOREIGN KEY ("student_Id") REFERENCES "students"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "comments" ADD FOREIGN KEY ("student_id") REFERENCES "students"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "comments" ADD FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id") ON DELETE SET NULL ON UPDATE CASCADE;

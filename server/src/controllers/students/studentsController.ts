@@ -5,6 +5,8 @@ import creteStudent from '../../entity/students/creteStudent';
 import { genPassword, isValidPassword } from '../../lib/passwordUtils';
 import findStudent from '../../entity/students/findStudent';
 
+import studentViews from '../../views/studentViews';
+
 export default {
   async index(request: Request, response: Response) {
     const {
@@ -23,7 +25,7 @@ export default {
     if(!isPassword) 
     return response.status(403).json({error: 'Invalid password'});
 
-    response.status(200).json(student);
+    response.status(200).json(studentViews.render(student));
   },
 
   async create(request: Request, response: Response) {
@@ -77,6 +79,6 @@ export default {
       class_id: clss.id
     });
 
-    response.status(201).json(newStudent);
+    response.status(201).json(studentViews.render(newStudent));
   }
 }

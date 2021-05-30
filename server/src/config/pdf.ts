@@ -1,20 +1,20 @@
-import multer, { FileFilterCallback } from 'multer';
+import multer, {FileFilterCallback} from 'multer';
 import path from 'path';
 import { Request } from 'express';
 
 export default {
   storage: multer.diskStorage({
-    destination: path.join(__dirname, '..', '..', 'uploads', 'pdf'),
+    destination: path.join(__dirname, '..', '..', 'uploads', 'pdfs'),
     filename: (request, file, cb) => {
+
       const name = file.originalname.toLowerCase().split(' ').join('-');
       const fileName = `${Date.now()}-${name}`;
 
       cb(null, fileName);
     }
   }),
+  limits: { fileSize: 200 * 1024 * 1024 },
   fileFilter: function(rep: Request, file: Express.Multer.File, cb: FileFilterCallback) {
-    console.log(file)
-     
     const allowedMimes = [
       'application/pdf',
       'application/zip'
@@ -23,8 +23,13 @@ export default {
     if(allowedMimes.includes(file.mimetype)) {
       cb(null, true)
     } else {
+
       cb(null, false);
-      return cb(new Error('Arquivo invalido. Apenas arquivos pdf e zip são permitidos.'))
+      
+      return cb(
+        new Error('Invalid document type. The documents type valid is pdf and zip')
+      );
     }
   }
 }
+

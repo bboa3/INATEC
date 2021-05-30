@@ -4,6 +4,8 @@ import creteTeacher from '../../entity/teachers/createTeacher';
 import findTeacher from '../../entity/teachers/findTeacher';
 import { genPassword, isValidPassword } from '../../lib/passwordUtils';
 
+import teacherViews from '../../views/teacherViews';
+
 export default {
   async index(request: Request, response: Response) {
     const {
@@ -22,7 +24,7 @@ export default {
     if(!isPassword) 
     return response.status(403).json({error: 'Invalid password'});
 
-    response.status(200).json(teacher);
+    response.status(200).json(teacherViews.render(teacher));
   },
 
   async create(request: Request, response: Response) {
@@ -65,6 +67,6 @@ export default {
       gender_id: genderFound.id,
     });
 
-    response.status(201).json(newTeacher);
+    response.status(201).json(teacherViews.render(newTeacher));
   }
 }

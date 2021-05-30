@@ -13,6 +13,10 @@ import classValidator from './controllers/classes/classesValidator';
 import lessonsController from './controllers/classes/lessonsController';
 import lessonsValidator from './controllers/classes/lessonsValidator';
 
+import downloadChatFiles from './controllers/chats/downloads';
+import chatsController from './controllers/chats/chatsController';
+import chatsValidator from './controllers/chats/chatsValidator';
+
 import avatarUploadConfig from './config/avatar';
 import pdfUploadConfig from './config/pdf';
 
@@ -25,6 +29,10 @@ routes.post('/create/student', studentsValidator, studentsController.create);
 
 routes.post('/login/teacher', teachersController.index);
 routes.post('/create/teacher', teachersValidator, teachersController.create);
+
+routes.get('/chats/:take', chatsController.index);
+routes.get('/chats/download/:id', downloadChatFiles.index);
+routes.post('/create/chat', pdfUpload.single('pdf'), chatsValidator, chatsController.create);
 
 routes.get('/classes/:id', classesController.index);
 routes.get('/classes', classesController.indexAll);

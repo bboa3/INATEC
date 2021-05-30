@@ -17,6 +17,7 @@ export default {
       year: clss.year,
       time: clss.time.time,
       lessons: clss.lessons?.map(lesson => ({
+        id: lesson.id,
         dayWeek: lesson.day_week,
         startAt: lesson.start_at,
         endAt: lesson.end_at,

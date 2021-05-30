@@ -4,7 +4,6 @@ import findClass from '../../entity/classes/findClassId';
 import findTime from '../../entity/classes/findTime';
 import getAllClasses from '../../entity/classes/getAllClasses';
 import getClass from '../../entity/classes/getClass';
-import findTeacher from '../../entity/teachers/findTeacher';
 import classesView from '../../views/classesViews';
 
 export default {

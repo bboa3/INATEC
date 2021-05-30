@@ -18,7 +18,7 @@ export default {
       lessons
     } = request.body;
 
-    const teacher = await findTeacher(teacherEmail);
+    const teacher = await findTeacher({email: teacherEmail});
 
     if(!teacher) 
     return response.status(404).json({error: 'Teacher not found'});
