@@ -13,7 +13,13 @@ const getChats = async (take: number) => {
 
     include: {
       students: true,
-      teachers: true
+      teachers: true,
+      comments: {
+        include: {
+          teachers: true,
+          students: true
+        }
+      }
     }
   })
 }

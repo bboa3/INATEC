@@ -3,7 +3,6 @@ import { students } from '@prisma/client';
 export default {
   render(student: students) {
     return {
-      id: student.id,
       name: student.name,
       username: student.username,
       email: student.email,
