@@ -15,6 +15,9 @@ const getChats = async (take: number) => {
       students: true,
       teachers: true,
       comments: {
+        orderBy: {
+          id: 'desc'
+        },
         include: {
           teachers: true,
           students: true

@@ -10,7 +10,7 @@ import commentValidator from '../../validations/name';
 
 export default {
   async update(request: Request, response: Response) {
-
+    const { comment, chatId, id } = request.body;
   },
 
   async create(request: Request, response: Response) {
